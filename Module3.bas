@@ -196,45 +196,48 @@ Private Sub autoFillLine(ws As Worksheet, endline As Long)
 End Sub
 
 
-'時刻を時間セルに挿入する
-'引数1：ワークシート
-'引数2：分
-'引数3：最終列
+'------------------------------------------------------------
+' 時刻を時間セルに挿入する処理
+'
+' 引数:
+'   ws      - 対象のワークシート
+'   min     - 分単位（例: 5 → 00:05:01のように開始）
+'   endclm  - 処理対象の最終列
+'------------------------------------------------------------
 Private Sub autoFillTime(ws As Worksheet, min As Long, endclm As Long)
-    Dim tmp            As Long
 
-    Dim boldcnt        As Long: boldcnt = 0
-    Dim r              As Range
+    ' 変数定義
+    Dim tmp         As Long: tmp = endclm
+    Dim boldcnt     As Long: boldcnt = 0
+    Dim r           As Range
+    Dim timeStr     As String
+    Dim frame30Mod  As Long
+    Dim i           As Long
 
-    Dim timeStr        As String
-
-    Dim frame30Mod     As Long
-
-    '変数定義
-    Dim i As Long
-    tmp = endclm
-
+    ' 最終列の調整（上限制限を考慮）
     If 30 <= tmp - TIME_COLUMN_LEFT Then
         If tmp > LIMIT_COLUMN Then
             tmp = LIMIT_COLUMN
         End If
     End If
 
-    'オートフィルする場所にセル結合があるとエラーが出るため
-    'セル結合を解除する
-    ws.Range(Cells(TIME_ROW, 12), Cells(TIME_ROW, 16384)).clear
+    ' 結合セルがあるとオートフィル時にエラーになるため、事前に解除・クリア
+    ws.Range(ws.Cells(TIME_ROW, 12), ws.Cells(TIME_ROW, 16384)).Clear
 
+    ' 時間セルの書式設定と結合処理
     For i = TIME_COLUMN_LEFT To SHEET_LIMIT_COLUMN Step TIME_WIDTH
-        Set r = ws.Range(Cells(TIME_ROW, i), Cells(TIME_ROW, i + TIME_WIDTH - 1))
+        Set r = ws.Range(ws.Cells(TIME_ROW, i), ws.Cells(TIME_ROW, i + TIME_WIDTH - 1))
+
         boldcnt = boldcnt + 1
 
-        'セルの書式もまとめて設定する。
         With r
-            .Merge True
-            .Orientation = -90
-            .ReadingOrder = xlContext
-            .HorizontalAlignment = xlCenter
-            .NumberFormatLocal = "hh:mm:ss"
+            .Merge True                      ' セル結合（横方向）
+            .Orientation = -90              ' 縦書き（90度回転）
+            .ReadingOrder = xlContext       ' 文字方向：自動判定
+            .HorizontalAlignment = xlCenter ' 横位置：中央
+            .NumberFormatLocal = "hh:mm:ss" ' 時刻形式にする
+
+            ' 5回に1回は太字にする
             If boldcnt = 5 Then
                 .Font.FontStyle = "bold"
                 boldcnt = 0
@@ -242,32 +245,28 @@ Private Sub autoFillTime(ws As Worksheet, min As Long, endclm As Long)
         End With
     Next i
 
-    timeStr = "00:" + CStr(min) + ":01"
-     With ws.Range(Cells(TIME_ROW, TIME_COLUMN_LEFT), Cells(TIME_ROW, TIME_COLUMN_RIGHT))
-        .Value = timeStr
-    End With
+    ' 初期の2つの時刻を直接入力（例: 00:05:01, 00:05:02）
+    timeStr = "00:" & Format(min, "00") & ":01"
+    ws.Range(ws.Cells(TIME_ROW, TIME_COLUMN_LEFT), _
+             ws.Cells(TIME_ROW, TIME_COLUMN_RIGHT)).Value = timeStr
 
-    timeStr = "00:" + CStr(min) + ":02"
-    With ws.Range(Cells(TIME_ROW, TIME_COLUMN_LEFT + TIME_WIDTH), Cells(TIME_ROW, TIME_COLUMN_RIGHT + TIME_WIDTH))
-        .Value = timeStr
-    End With
+    timeStr = "00:" & Format(min, "00") & ":02"
+    ws.Range(ws.Cells(TIME_ROW, TIME_COLUMN_LEFT + TIME_WIDTH), _
+             ws.Cells(TIME_ROW, TIME_COLUMN_RIGHT + TIME_WIDTH)).Value = timeStr
 
+    ' フレーム幅の余りを調整し、オートフィル範囲をフレーム単位に丸める
     frame30Mod = (tmp - TIME_COLUMN_LEFT) Mod TIME_WIDTH
-
     If frame30Mod Then
         tmp = tmp + TIME_WIDTH - frame30Mod
     End If
 
+    ' 2つ目の時刻より右側が存在する場合にのみ、オートフィルを実行
     If (TIME_COLUMN_LEFT + TIME_WIDTH) < tmp Then
-        ws.Range( _
-            Cells(TIME_ROW, TIME_COLUMN_LEFT), _
-            Cells(TIME_ROW, TIME_COLUMN_RIGHT + TIME_WIDTH) _
-        ).AutoFill _
-        Destination:=Range( _
-            Cells(TIME_ROW, TIME_COLUMN_LEFT), _
-            Cells(TIME_ROW, tmp - 1) _
-        ), _
-        Type:=xlFillValues
+        ws.Range(ws.Cells(TIME_ROW, TIME_COLUMN_LEFT), _
+                 ws.Cells(TIME_ROW, TIME_COLUMN_RIGHT + TIME_WIDTH)).AutoFill _
+            Destination:=ws.Range(ws.Cells(TIME_ROW, TIME_COLUMN_LEFT), _
+                                  ws.Cells(TIME_ROW, tmp - 1)), _
+            Type:=xlFillValues
     End If
 
 End Sub
