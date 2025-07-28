@@ -272,11 +272,6 @@ Private Sub autoFillTime(ws As Worksheet, min As Long, endclm As Long)
 End Sub
 
 
-Sub test_cancel()
-    Call paintPostureScore(1)
-End Sub
-
-
 '単位時間当たり最も多い姿勢点・信頼性を調べてセルに色を塗る
 'processingRange　1:選択範囲（部分的に強制をキャンセル） 2:全体 else:特定の1セルごと
 Sub paintPostureScore(processingRange As Long)
