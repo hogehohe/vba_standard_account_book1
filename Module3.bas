@@ -300,24 +300,17 @@ Sub paintPostureScore(processingRange As Long)
     'ポイント計算シートの姿勢点を保管
     Dim postureScoreDataArray()    As Long
 
-    '~~~~~~~~~~~~~~~~追加~~~~~~~~~~~~~~~~~~~
-
     '条件A,B,Cごとの姿勢点を保管
     Dim postureScoreDataArray_A()  As Long
     Dim postureScoreDataArray_B()  As Long
     Dim postureScoreDataArray_C()  As Long
 
-    '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
     '0～1点のフレーム数をそれぞれ合計
 
-    '~~~~~~~~~~~~~~~~追加~~~~~~~~~~~~~~~~~~~
     '条件AからCのフレーム数をそれぞれ合計
     Dim postureScoreCounterArray_A(0 To 1)      As Long
     Dim postureScoreCounterArray_B(0 To 1)      As Long
     Dim postureScoreCounterArray_C(0 To 1)      As Long
-
-    '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     'ポイント計算シートの信頼性を保管
     '1:測定、2:推定、3:欠損
@@ -343,24 +336,17 @@ Sub paintPostureScore(processingRange As Long)
     '姿勢点一時記憶用の変数
     Dim postureScoreFlag        As Long
 
-    '~~~~~~~~~~~~~~~~追加~~~~~~~~~~~~~~~~~~~
     Dim postureScoreFlag_A      As Long
     Dim postureScoreFlag_B      As Long
     Dim postureScoreFlag_C      As Long
 
-    '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
     '単位時間の中で一番多い姿勢点を保管
     Dim mostOftenPostureScore   As Long
-
-    '~~~~~~~~~~~~~~~~追加~~~~~~~~~~~~~~~~~~~
 
     'AからCの姿勢点一時記憶用の変数
     Dim mostOftenPostureScore_A As Long
     Dim mostOftenPostureScore_B As Long
     Dim mostOftenPostureScore_C As Long
-
-    '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     '信頼性一時記憶用の変数
     Dim reliabilityFlag         As Long
@@ -378,14 +364,11 @@ Sub paintPostureScore(processingRange As Long)
     Dim baseClm     As Long
     Dim shtPage     As Long
 
-    '~~~~~~~追加~~~~~~~~~~~~~~~~~~~
     'カラーを保持する変数
     Dim colorStr    As String
     Dim colorStr1   As String '条件A
     Dim colorStr2   As String '条件B
     Dim colorStr3   As String '条件C
-
-    '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     '動画時間(秒)により列の初期幅を変更する
 
