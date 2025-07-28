@@ -945,19 +945,22 @@ Sub postureUpdate(sclm As Long, fclm As Long, bit As Long, score As Long)
 End Sub
 
 
-'姿勢素点強制区間にビットを立てる処理
-'引数1：ポイント計算シートの修正するセルの行
-'引数2：リセットから呼ばれたら0、それ以外は1
-'引数3：どのボタンから呼ばれたかを区別するID
-'       リセット ：-1
-'       強制ON 　：1
-'       強制OFF　：0
-'       除外   　：99
-'引数4：ポイント計算シートの修正するセルの列
+'------------------------------------------------------------
+' 姿勢素点の信頼性を更新（強制／除外／リセット）
+'
+' 【引数】
+'   row               - 対象となる行番号（ポイント計算シート）
+'   bit               - 呼び出し種別フラグ（0:リセット, 1:強制）
+'   vle               - 姿勢スコア（-1:初期化, 1?10:強制, 99:除外）
+'   column_forced_num - 姿勢スコアを入力する対象列（拳上・腰曲げ・膝曲げ）
+'
+' 【呼び出し例】
+'   - bit = 0   → リセット（姿勢スコア・信頼性の初期化）
+'   - bit = 1   → 強制（vleにスコア、または99:除外）
+'------------------------------------------------------------
 Sub reliabilityUpdate(row As Long, bit As Long, vle As Long, column_forced_num As Long)
     '変数定義
     Dim column_reliability_forced_num As Long
-
 
     With ThisWorkbook.Sheets("ポイント計算シート")
         '除外
@@ -969,7 +972,6 @@ Sub reliabilityUpdate(row As Long, bit As Long, vle As Long, column_forced_num A
             .Cells(row, COLUMN_POSTURE_SCORE_KOBUSHIAGE).Value = 0
             .Cells(row, COLUMN_POSTURE_SCORE_KOSHIMAGE).Value = 0
             .Cells(row, COLUMN_POSTURE_SCORE_HIZAMAGE).Value = 0
-
 
             '信頼性の強制を解除
             .Cells(row, COLUMN_FORCED_SECTION_KOBUSHIAGE).Value = 0
@@ -987,12 +989,10 @@ Sub reliabilityUpdate(row As Long, bit As Long, vle As Long, column_forced_num A
             .Cells(row, COLUMN_POSTURE_SCORE_KOSHIMAGE).Value = .Cells(row, COLUMN_POSTURE_SCORE_KOSHIMAGE - 1).Value
             .Cells(row, COLUMN_POSTURE_SCORE_HIZAMAGE).Value = .Cells(row, COLUMN_POSTURE_SCORE_HIZAMAGE - 1).Value
 
-
             '信頼性の強制を解除
             .Cells(row, COLUMN_FORCED_SECTION_KOBUSHIAGE).Value = 0
             .Cells(row, COLUMN_FORCED_SECTION_KOSHIMAGE).Value = 0
             .Cells(row, COLUMN_FORCED_SECTION_HIZAMAGE).Value = 0
-
 
         '強制
         Else
