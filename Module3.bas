@@ -157,32 +157,44 @@ Sub autoFillTemplate()
 End Sub
 
 
-'罫線の複製 "G2:EZ25"の範囲をベースとする。
-'引数1：ワークシート
-'引数2：罫線が描画される最後の列
+'------------------------------------------------------------
+' 罫線の複製処理
+'
+' 「G2:EZ21」のレイアウトをベースとして、指定列まで右方向に複製する。
+' 主に罫線や装飾を含むオートフィル処理を実行。
+'
+' 引数:
+'   ws       - 対象のワークシート
+'   endline  - 罫線を引く対象の最終列（上限あり）
+'------------------------------------------------------------
 Private Sub autoFillLine(ws As Worksheet, endline As Long)
-    Dim ruleLineColumnNum  As Long
-    Dim ruleLineColumnAlf  As String
+    Dim targetColNum   As Long   ' 処理対象の列番号（制限後）
+    Dim targetColAlpha As String ' 列番号をアルファベット表記に変換したもの
 
-    ruleLineColumnNum = endline
-    If ruleLineColumnNum > SHEET_LIMIT_COLUMN Then
-        ruleLineColumnNum = SHEET_LIMIT_COLUMN
+    ' 列番号が上限を超える場合、制限値までに調整
+    targetColNum = endline
+    If targetColNum > SHEET_LIMIT_COLUMN Then
+        targetColNum = SHEET_LIMIT_COLUMN
     End If
-    Dim frame30Mod As Long
-    frame30Mod = (ruleLineColumnNum + 21) Mod 30
 
-    'オートフィル関数をRC表記で動作させる方法が分からないため
-    'オートフィルの終了列をアルファベット表記に変換
-    ruleLineColumnAlf = Split(Cells(1, ruleLineColumnNum).Address(True, False), "$")(0)
+    ' オートフィル終了列をアルファベット表記に変換（例: 160 → "FT"）
+    targetColAlpha = Split(ws.Cells(1, targetColNum).Address(True, False), "$")(0)
 
-    'きれいにしてからオートフィルする(=色までコピーされるため)
+    ' 対象シートを一度クリア（色や罫線含め全消去）
     Call clear(ws)
 
-    ws.Range("G2:EZ21").AutoFill Destination:=Range("G2:" & ruleLineColumnAlf & 21), Type:=xlFillDefault
-    ruleLineColumnAlf = Split(Cells(1, ruleLineColumnNum + 1).Address(True, False), "$")(0)
-    Range(ruleLineColumnAlf & 2 & ":XFD21").Borders.LineStyle = xlLineStyleNone ' 上下左右の罫線を消す
+    ' レイアウトの基準範囲（G2:EZ21）を、指定列までオートフィル
+    ws.Range("G2:EZ21").AutoFill _
+        Destination:=ws.Range("G2:" & targetColAlpha & 21), _
+        Type:=xlFillDefault
+
+    ' 複製された範囲の右側の不要な罫線を削除（XFD列まで）
+    Dim clearStartColAlpha As String
+    clearStartColAlpha = Split(ws.Cells(1, targetColNum + 1).Address(True, False), "$")(0)
+    ws.Range(clearStartColAlpha & "2:XFD21").Borders.LineStyle = xlLineStyleNone
 
 End Sub
+
 
 '時刻を時間セルに挿入する
 '引数1：ワークシート
