@@ -742,60 +742,38 @@ Sub forceResult(postureScorebutton As Long)
     '---------------------------------------------
     'RGBを指定するための変数を定義
     '---------------------------------------------
-    '信頼性
-    Dim colorMeasureSection    As String '水色
-    Dim colorPredictSection    As String '黄色
-    Dim colorMissingSection    As String 'ピンク
-    Dim colorForcedSection     As String '青色
-    Dim colorRemoveSection     As String 'グレー
+    ' 色設定：信頼性
+    Dim colorMeasureSection As Long: colorMeasureSection = RGB(0, 176, 240)
+    Dim colorPredictSection As Long: colorPredictSection = RGB(252, 246, 0)
+    Dim colorMissingSection As Long: colorMissingSection = RGB(255, 124, 128)
+    Dim colorForcedSection  As Long: colorForcedSection  = RGB(0, 51, 204)
+    Dim colorResetSection   As Long: colorResetSection   = RGB(191, 191, 191)
 
-    '姿勢点
-    Dim colorResultGreen       As String '緑色
-    Dim colorResultYellow      As String '黄色
-    Dim colorResultRed         As String '赤色
-    Dim colorResultGlay        As String 'グレー
-    Dim colorResultWhite       As String '白色 20221219_下里
-    Dim colorResultBrown       As String '茶色 20221222_下里
-    Dim colorResultOFFGlay     As String 'グレー 20221222_下里
+    ' 色設定：姿勢点
+    Dim colorResultGreen    As Long: colorResultGreen   = RGB(0, 176, 80)
+    Dim colorResultYellow   As Long: colorResultYellow  = RGB(255, 192, 0)
+    Dim colorResultRed      As Long: colorResultRed     = RGB(192, 0, 0)
+    Dim colorResultGlay     As Long: colorResultGlay    = RGB(191, 191, 191)
+    Dim colorResultWhite    As Long: colorResultWhite   = RGB(255, 255, 255)
+    Dim colorResultOFFGlay  As Long: colorResultOFFGlay = RGB(217, 217, 217)
 
-    '---------------------------------------------
-    '変数に色をセット
-    '---------------------------------------------
-    '1:測定、2:推定、3:欠損、4:強制、5:除外
-    '信頼性
-    colorMeasureSection = RGB(0, 176, 240)   '水色
-    colorPredictSection = RGB(252, 246, 0)   '黄色
-    colorMissingSection = RGB(255, 124, 128) 'ピンク
-    colorForcedSection  = RGB(0, 51, 204)    '青色
-    colorRemoveSection  = RGB(191, 191, 191) 'グレー
-    '姿勢点
-    colorResultGreen    = RGB(0, 176, 80)    '緑色
-    colorResultYellow   = RGB(255, 192, 0)   '黄色
-    colorResultRed      = RGB(192, 0, 0)     '赤色
-    colorResultGlay     = RGB(191, 191, 191) 'グレー
-    colorResultWhite    = RGB(255, 255, 255) '白色
-    colorResultBrown    = RGB(64, 0, 0)      '茶色
-    colorResultOFFGlay  = RGB(217, 217, 217) '判定オフ用のグレー
-
-    Dim baseClm As Long
-    Dim shtPage As Long
-    shtPage = calcSheetNamePlace(ThisWorkbook.ActiveSheet)
-    baseClm = LIMIT_COLUMN * shtPage
+    ' 現在のシート位置から列オフセットを計算
+    Dim shtPage             As Long: shtPage = calcSheetNamePlace(ThisWorkbook.ActiveSheet)
+    Dim baseClm             As Long: baseClm = LIMIT_COLUMN * shtPage
 
     '選択範囲内のセル読み込み用　20221222_下里
-    Dim SelectCells  As Variant
-    Dim MaxRightCell As Variant
-    Dim MinLeftCell  As Variant
-
-    Dim lCol As Long
-    Dim rCol As Long
+    '変数定義
+    Dim SelectCells     As Variant
+    Dim k               As Long
+    Dim m               As Long
+    Dim lCol            As Long
+    Dim rCol            As Long
+    Dim MaxRightCell    As Variant
+    Dim MinLeftCell     As Variant
 
     '一時的にSelection.rowの価を保存しておく変数
-    Dim postur_row As Long
+    Dim postur_row      As Long
 
-    '変数定義
-    Dim k As Long
-    Dim m As Long
     '---------------------------------------------
     'ここから強制処理
     '---------------------------------------------
