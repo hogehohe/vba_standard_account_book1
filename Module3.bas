@@ -1,72 +1,71 @@
-Attribute VB_Name = "Module3"
 Option Explicit
 
 '---------------------------------------------
 '姿勢評価修正シートで使う定数
 '---------------------------------------------
-'１マスの秒数を定義
-Const UNIT_TIME       As Double = 0.1
+'1マスの秒数を定義
+Const UNIT_TIME                         As Double = 0.1
 
-'０秒の列
-Const COLUMN_ZERO_NUM As Long = 6
+'0秒の列
+Const COLUMN_ZERO_NUM                   As Long = 6
 
 '行
 '信頼性上端
-Const ROW_RELIABILITY_TOP      As Long = 2
+Const ROW_RELIABILITY_TOP               As Long = 2
 '信頼性下端
-Const ROW_RELIABILITY_BOTTOM   As Long = 7
+Const ROW_RELIABILITY_BOTTOM            As Long = 7
 '姿勢点上端
-Const ROW_POSTURE_SCORE_TOP    As Long = 9
+Const ROW_POSTURE_SCORE_TOP             As Long = 9
 '姿勢点下端
-Const ROW_POSTURE_SCORE_KOSHIMAGEOTTOM As Long = 17
+Const ROW_POSTURE_SCORE_KOSHIMAGEOTTOM  As Long = 17
 
 'A_姿勢点
 Const ROW_POSTURE_SCORE_KOBUSHIAGE      As Long = 12
 'B_姿勢点
-Const ROW_POSTURE_SCORE_KOSHIMAGE      As Long = 14
+Const ROW_POSTURE_SCORE_KOSHIMAGE       As Long = 14
 'C_姿勢点
-Const ROW_POSTURE_SCORE_HIZAMAGE      As Long = 16
+Const ROW_POSTURE_SCORE_HIZAMAGE        As Long = 16
 
 '---------------------------------------------
 'ポイント計算シートの列
 '---------------------------------------------
 
 '姿勢点が保存されている列
-Const COLUMN_POSTURE_SCORE_ALL As Long = 203
+Const COLUMN_POSTURE_SCORE_ALL          As Long = 203
 
 '測定
-Const COLUMN_MEASURE_SECTION   As Long = 204
+Const COLUMN_MEASURE_SECTION            As Long = 204
 '推定
-Const COLUMN_PREDICT_SECTION   As Long = 205
+Const COLUMN_PREDICT_SECTION            As Long = 205
 '除外区間
-Const COLUMN_REMOVE_SECTION    As Long = 206
+Const COLUMN_REMOVE_SECTION             As Long = 206
 '強制区間
-Const COLUMN_FORCED_SECTION_TOTAL    As Long = 207
+Const COLUMN_FORCED_SECTION_TOTAL       As Long = 207
 '元データ
-Const COLUMN_BASE_SCORE        As Long = 208
+Const COLUMN_BASE_SCORE                 As Long = 208
 '姿勢素点緑色
-Const COLUMN_POSTURE_GREEN     As Long = 209
+Const COLUMN_POSTURE_GREEN              As Long = 209
 '姿勢素点黄色
-Const COLUMN_POSTURE_YELLOW    As Long = 210
+Const COLUMN_POSTURE_YELLOW             As Long = 210
 '姿勢素点赤色
-Const COLUMN_POSTURE_RED       As Long = 211
+Const COLUMN_POSTURE_RED                As Long = 211
 
 '欠損
-Const COLUMN_MISSING_SECTION   As Long = 219
+Const COLUMN_MISSING_SECTION            As Long = 219
 
 '拳上強制区間
-Const COLUMN_FORCED_SECTION_KOBUSHIAGE As Long = 223
+Const COLUMN_FORCED_SECTION_KOBUSHIAGE  As Long = 223
 '腰曲げ強制区間
-Const COLUMN_FORCED_SECTION_KOSHIMAGE As Long = 228
+Const COLUMN_FORCED_SECTION_KOSHIMAGE   As Long = 228
 '膝曲げ強制区間
-Const COLUMN_FORCED_SECTION_HIZAMAGE As Long = 233
+Const COLUMN_FORCED_SECTION_HIZAMAGE    As Long = 233
 
 '条件A(拳上)が保存されている列
-Const COLUMN_POSTURE_SCORE_KOBUSHIAGE As Long = 245
+Const COLUMN_POSTURE_SCORE_KOBUSHIAGE   As Long = 245
 '条件B(腰曲げ)が保存されている列
-Const COLUMN_POSTURE_SCORE_KOSHIMAGE As Long = 247
+Const COLUMN_POSTURE_SCORE_KOSHIMAGE    As Long = 247
 '条件C(膝曲げ)が保存されている列
-Const COLUMN_POSTURE_SCORE_HIZAMAGE As Long = 249
+Const COLUMN_POSTURE_SCORE_HIZAMAGE     As Long = 249
 
 '---------------------------------------------
 '姿勢評価修正シート　関連
@@ -74,23 +73,20 @@ Const COLUMN_POSTURE_SCORE_HIZAMAGE As Long = 249
 'LIMIT_COLUMNの設定値は3の倍数とする必要がある
 '30fps×60秒×9分＝16200
 '姿勢評価修正シートは9分毎に次のシートを生成する
-Const LIMIT_COLUMN             As Long = 16200
+Const LIMIT_COLUMN                      As Long = 16200
 
-'Const LIMIT_COLUMN             As Long = 6000
-
-Const SHEET_LIMIT_COLUMN       As Long = LIMIT_COLUMN + COLUMN_ZERO_NUM
+Const SHEET_LIMIT_COLUMN                As Long = LIMIT_COLUMN + COLUMN_ZERO_NUM
 
 '時刻表示セルの幅
-Const TIME_WIDTH               As Long = 30
+Const TIME_WIDTH                        As Long = 30
 '時刻表示セルが存在する行
-Const TIME_ROW                 As Long = 22
+Const TIME_ROW                          As Long = 22
 '一つ目の時刻表示セルの左端
-Const TIME_COLUMN_LEFT         As Long = 22
+Const TIME_COLUMN_LEFT                  As Long = 22
 '一つ目の時刻表示セルの右端
-Const TIME_COLUMN_RIGHT        As Long = 51
+Const TIME_COLUMN_RIGHT                 As Long = 51
 'データ調整用のテーブルの下端
-Const BOTTOM_OF_TABLE          As Long = 22
-
+Const BOTTOM_OF_TABLE                   As Long = 22
 
 '列幅用の列挙
 Private Enum widthSize
@@ -101,16 +97,16 @@ Private Enum widthSize
 End Enum
 
 '列幅調整ボタン名前
-Const EXPANDBTN_NAME           As String = "expandBtn"
-Const REDUCEBTN_NAME           As String = "reduceBtn"
+Const EXPANDBTN_NAME                    As String = "expandBtn"
+Const REDUCEBTN_NAME                    As String = "reduceBtn"
 
 '---------------------------------------------
 '複数モジュールで使用する変数
 '---------------------------------------------
 '再生・停止ボタンで使用
 '指定した時間が経過すると処理を実行する
- Private ResTime As Date
- Private scrollTime As Double
+Private ResTime As Date
+Private scrollTime As Double
 
 
 '処理時間短縮のため、更新をストップ
@@ -132,20 +128,21 @@ Function restartUpdate()
     Application.ScreenUpdating = True
 End Function
 
+
 '姿勢評価修正シート
 '罫線と映像時刻をオートフィル
 Sub autoFillTemplate()
     'ラベルの列数
-    Dim startColumnNum   As Long
-    '１０秒の列数
-    Dim unit10SecColumnNum As Long
+    Dim startColumnNum      As Long
+    '10秒の列数
+    Dim unit10SecColumnNum  As Long
 
     '変数定義
-    Dim workTime           As Double
-    Dim fps                As Double
-    Dim maxFrameNum        As Long
-    Dim ruleLineColumnNum  As Long
-    Dim ruleLineColumnAlf  As String
+    Dim workTime            As Double
+    Dim fps                 As Double
+    Dim maxFrameNum         As Long
+    Dim ruleLineColumnNum   As Long
+    Dim ruleLineColumnAlf   As String
 
     startColumnNum = COLUMN_ZERO_NUM + 1
     unit10SecColumnNum = 10 / UNIT_TIME
@@ -156,10 +153,9 @@ Sub autoFillTemplate()
         fps = .Cells(2, 199)
         '最終行の値を取得
         maxFrameNum = .Cells(.Cells(1, 1).End(xlDown).row, 1).Value
-        '作業時間を計算
-'        workTime = CDbl(maxFrameNum / fps)
-    End With 'With ThisWorkbook.Sheets("ポイント計算シート")
+    End With
 End Sub
+
 
 '罫線の複製 "G2:EZ25"の範囲をベースとする。
 '引数1：ワークシート
@@ -174,9 +170,7 @@ Private Sub autoFillLine(ws As Worksheet, endline As Long)
     End If
     Dim frame30Mod As Long
     frame30Mod = (ruleLineColumnNum + 21) Mod 30
-'    If frame30Mod Then
-'        ruleLineColumnNum = ruleLineColumnNum + 30 - frame30Mod
-'    End If
+
     'オートフィル関数をRC表記で動作させる方法が分からないため
     'オートフィルの終了列をアルファベット表記に変換
     ruleLineColumnAlf = Split(Cells(1, ruleLineColumnNum).Address(True, False), "$")(0)
@@ -229,14 +223,12 @@ Private Sub autoFillTime(ws As Worksheet, min As Long, endclm As Long)
             .ReadingOrder = xlContext
             .HorizontalAlignment = xlCenter
             .NumberFormatLocal = "hh:mm:ss"
-'        ws.Range(Cells(TIME_ROW, i), Cells(TIME_ROW, i + 29)).Merge True
-        If boldcnt = 5 Then
-            .Font.FontStyle = "bold"
-            boldcnt = 0
-        End If
+            If boldcnt = 5 Then
+                .Font.FontStyle = "bold"
+                boldcnt = 0
+            End If
         End With
     Next i
-
 
     timeStr = "00:" + CStr(min) + ":01"
      With ws.Range(Cells(TIME_ROW, TIME_COLUMN_LEFT), Cells(TIME_ROW, TIME_COLUMN_RIGHT))
@@ -247,7 +239,6 @@ Private Sub autoFillTime(ws As Worksheet, min As Long, endclm As Long)
     With ws.Range(Cells(TIME_ROW, TIME_COLUMN_LEFT + TIME_WIDTH), Cells(TIME_ROW, TIME_COLUMN_RIGHT + TIME_WIDTH))
         .Value = timeStr
     End With
-
 
     frame30Mod = (tmp - TIME_COLUMN_LEFT) Mod TIME_WIDTH
 
@@ -268,6 +259,8 @@ Private Sub autoFillTime(ws As Worksheet, min As Long, endclm As Long)
     End If
 
 End Sub
+
+
 Sub test_cancel()
     Call paintPostureScore(1)
 End Sub
@@ -301,21 +294,20 @@ Sub paintPostureScore(processingRange As Long)
     colorMeasureSection = RGB(0, 176, 240)   '水色
     colorPredictSection = RGB(252, 246, 0)   '黄色
     colorMissingSection = RGB(255, 124, 128) 'ピンク
-    colorForcedSection = RGB(0, 51, 204)     '青色
-    colorRemoveSection = RGB(191, 191, 191)  'グレー
+    colorForcedSection  = RGB(0, 51, 204)    '青色
+    colorRemoveSection  = RGB(191, 191, 191) 'グレー
     '姿勢点
-    colorResultGreen = RGB(0, 176, 80)       '緑色
-    colorResultYellow = RGB(255, 192, 0)     '黄色
-    colorResultRed = RGB(192, 0, 0)          '赤色
-    colorResultGlay = RGB(191, 191, 191)     'グレー
-    colorResultWhite = RGB(255, 255, 255)    '白色
+    colorResultGreen    = RGB(0, 176, 80)    '緑色
+    colorResultYellow   = RGB(255, 192, 0)   '黄色
+    colorResultRed      = RGB(192, 0, 0)     '赤色
+    colorResultGlay     = RGB(191, 191, 191) 'グレー
+    colorResultWhite    = RGB(255, 255, 255) '白色
 
     '---------------------------------------------
     '配列
     '---------------------------------------------
     'ポイント計算シートの姿勢点を保管
-    Dim postureScoreDataArray()           As Long
-
+    Dim postureScoreDataArray()    As Long
 
     '~~~~~~~~~~~~~~~~追加~~~~~~~~~~~~~~~~~~~
 
@@ -323,48 +315,43 @@ Sub paintPostureScore(processingRange As Long)
     Dim postureScoreDataArray_A()  As Long
     Dim postureScoreDataArray_B()  As Long
     Dim postureScoreDataArray_C()  As Long
-'    Dim postureScoreDataArray_E()  As Long
 
     '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 
     '0～1点のフレーム数をそれぞれ合計
 
     '~~~~~~~~~~~~~~~~追加~~~~~~~~~~~~~~~~~~~
-    '条件AからEのフレーム数をそれぞれ合計
+    '条件AからCのフレーム数をそれぞれ合計
     Dim postureScoreCounterArray_A(0 To 1)      As Long
     Dim postureScoreCounterArray_B(0 To 1)      As Long
     Dim postureScoreCounterArray_C(0 To 1)      As Long
-'    Dim postureScoreCounterArray_E(0 To 1)      As Long
 
     '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
 
     'ポイント計算シートの信頼性を保管
     '1:測定、2:推定、3:欠損
     Dim reliabilityDataArray()     As Long
-    '信頼性１～３のフレーム数をそれぞれ合計
+    '信頼性 1 ~ 3 のフレーム数をそれぞれ合計
     Dim reliabilityCounterArray(3) As Long
 
     '---------------------------------------------
     'その他の変数
     '---------------------------------------------
     'ポイント計算シート最大行数の変数定義
-    Dim maxRowNum      As Long
+    Dim maxRowNum               As Long
 
     '変数定義
-    Dim i          As Long
-    Dim j          As Long
+    Dim i                       As Long
+    Dim j                       As Long
 
-    Dim fps        As Double
+    Dim fps                     As Double
 
     '単位時間の繰り返し処理の開始終了地点を定義
-    Dim wholeStart As Long
-    Dim wholeEnd   As Long
+    Dim wholeStart              As Long
+    Dim wholeEnd                As Long
 
     '姿勢点一時記憶用の変数
-    Dim postureScoreFlag      As Long
+    Dim postureScoreFlag        As Long
 
     '~~~~~~~~~~~~~~~~追加~~~~~~~~~~~~~~~~~~~
     Dim postureScoreFlag_A      As Long
@@ -374,7 +361,7 @@ Sub paintPostureScore(processingRange As Long)
     '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     '単位時間の中で一番多い姿勢点を保管
-    Dim mostOftenPostureScore As Long
+    Dim mostOftenPostureScore   As Long
 
     '~~~~~~~~~~~~~~~~追加~~~~~~~~~~~~~~~~~~~
 
@@ -385,40 +372,35 @@ Sub paintPostureScore(processingRange As Long)
 
     '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-
     '信頼性一時記憶用の変数
-    Dim reliabilityFlag       As Long
+    Dim reliabilityFlag         As Long
     '単位時間の中で一番多い信頼性を保管
-    Dim mostOftenReliability  As Long
+    Dim mostOftenReliability    As Long
 
     '次ページにいく制限
-    Dim thisPageLimit As Long
+    Dim thisPageLimit           As Long
     thisPageLimit = LIMIT_COLUMN
+
     '前のページの最終列を保存する
-    Dim preClm As Long
+    Dim preClm      As Long
     preClm = 0
     Call stopUpdate
 
-    Dim baseClm As Long
-    Dim shtPage As Long
-
-
-
+    Dim baseClm     As Long
+    Dim shtPage     As Long
 
     '~~~~~~~追加~~~~~~~~~~~~~~~~~~~
     'カラーを保持する変数
-    Dim colorStr As String
-
-    Dim colorStr1 As String '条件A
-    Dim colorStr2 As String '条件B
-    Dim colorStr3 As String '条件C
+    Dim colorStr    As String
+    Dim colorStr1   As String '条件A
+    Dim colorStr2   As String '条件B
+    Dim colorStr3   As String '条件C
 
     '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-
     '動画時間(秒)により列の初期幅を変更する
 
-    Dim wSize     As widthSize
+    Dim wSize       As widthSize
 
     '---------------------------------------------
     '変数、配列に値を入力
@@ -430,7 +412,6 @@ Sub paintPostureScore(processingRange As Long)
 '        余分を削除
         maxRowNum = maxRowNum - 1
         '配列を再定義
-        'ReDim postureScoreDataArray(maxRowNum, 0)
         ReDim postureScoreDataArray_A(maxRowNum, 0)
         ReDim postureScoreDataArray_B(maxRowNum, 0)
         ReDim postureScoreDataArray_C(maxRowNum, 0)
@@ -440,17 +421,11 @@ Sub paintPostureScore(processingRange As Long)
 
         '配列の中に値を入れる
         For i = 1 To maxRowNum
-'        For i = 1 To 10
-            '姿勢点の列を配列に入れる
-            '配列は0から始まるため+1、2行目から使用するため+1
-            'postureScoreDataArray(i - 1, 0) = .Cells(i + 1, COLUMN_POSTURE_SCORE_ALL).Value
-
 
             '条件Aからの配列を入れる
-             postureScoreDataArray_A(i - 1, 0) = .Cells(i + 1, COLUMN_POSTURE_SCORE_KOBUSHIAGE - 1).Value
-             postureScoreDataArray_B(i - 1, 0) = .Cells(i + 1, COLUMN_POSTURE_SCORE_KOSHIMAGE - 1).Value
-             postureScoreDataArray_C(i - 1, 0) = .Cells(i + 1, COLUMN_POSTURE_SCORE_HIZAMAGE - 1).Value
-
+            postureScoreDataArray_A(i - 1, 0) = .Cells(i + 1, COLUMN_POSTURE_SCORE_KOBUSHIAGE - 1).Value
+            postureScoreDataArray_B(i - 1, 0) = .Cells(i + 1, COLUMN_POSTURE_SCORE_KOSHIMAGE - 1).Value
+            postureScoreDataArray_C(i - 1, 0) = .Cells(i + 1, COLUMN_POSTURE_SCORE_HIZAMAGE - 1).Value
 
             '信頼性を配列に入れる
             '1:測定、2:推定、3:欠損
@@ -469,14 +444,12 @@ Sub paintPostureScore(processingRange As Long)
         fps = .Cells(2, 199).Value
         Dim video_sec As Double: video_sec = wholeEnd / fps
 
-    End With 'With ThisWorkbook.Sheets("ポイント計算シート")
-
+    End With
 
     '---------------------------------------------
     '処理範囲を決める
     '---------------------------------------------
     'キャンセル(戻る)ボタンから呼ばれたとき
-
 
     If processingRange = 1 Then
         'アクティブセルの一番左が6列目以下の時
@@ -484,7 +457,6 @@ Sub paintPostureScore(processingRange As Long)
 
         shtPage = calcSheetNamePlace(ThisWorkbook.ActiveSheet)
         baseClm = LIMIT_COLUMN * shtPage
-
 
         'pageLimitを次のページとなる閾値まで更新
         thisPageLimit = (shtPage + 1) * LIMIT_COLUMN
@@ -539,29 +511,19 @@ Sub paintPostureScore(processingRange As Long)
         shtPage = calcSheetNamePlace(ThisWorkbook.ActiveSheet)
         baseClm = LIMIT_COLUMN * shtPage
 
-
         'pageLimitを次のページとなる閾値まで更新
         thisPageLimit = (shtPage + 1) * LIMIT_COLUMN
         preClm = (LIMIT_COLUMN * shtPage) * -1
 
-        '20230126_下里
-        '選択範囲が6列以内の場合、データの左端になるように修正
-'        If Selection.Column <= COLUMN_ZERO_NUM Then
-'            wholeStart = 1
-'        Else
         wholeStart = processingRange - COLUMN_ZERO_NUM + baseClm
-'        End If
-        '
+
         wholeEnd = wholeStart
     End If
-
-
 
     For i = wholeStart To wholeEnd
 
         '姿勢点のカウンターをリセット
-        'Erase postureScoreCounterArray
-        'AからEの姿勢点のカウンターをリセット
+        'AからCの姿勢点のカウンターをリセット
         Erase postureScoreCounterArray_A
         Erase postureScoreCounterArray_B
         Erase postureScoreCounterArray_C
@@ -569,25 +531,19 @@ Sub paintPostureScore(processingRange As Long)
         '信頼性のカウンターをリセット
         Erase reliabilityCounterArray
 
-
         '姿勢点を確認
-        'postureScoreFlag = postureScoreDataArray(i - 1, 0)
-        'AからEの姿勢点を確認
+        'AからCの姿勢点を確認
         postureScoreFlag_A = postureScoreDataArray_A(i - 1, 0)
         postureScoreFlag_B = postureScoreDataArray_B(i - 1, 0)
         postureScoreFlag_C = postureScoreDataArray_C(i - 1, 0)
 
-
         '姿勢点フラグを立てる
-        'AからEの姿勢点フラグを立てる
+        'AからCの姿勢点フラグを立てる
         postureScoreCounterArray_A(postureScoreFlag_A) = 1
         postureScoreCounterArray_B(postureScoreFlag_B) = 1
         postureScoreCounterArray_C(postureScoreFlag_C) = 1
 
-
-
         '信頼性を確認
-'        reliabilityFlag = reliabilityDataArray(i - 1, 0)230209
         reliabilityFlag = reliabilityDataArray(i, 0)
         '信頼性フラグを立てる
         reliabilityCounterArray(reliabilityFlag) = 1
@@ -600,23 +556,22 @@ Sub paintPostureScore(processingRange As Long)
         mostOftenPostureScore_B = 0
         mostOftenPostureScore_C = 0
 
-
-        '姿勢点0～1の先頭から順に比較
+        '姿勢点 0 ~ 1 の先頭から順に比較
         For j = 0 To 1
             'フレーム数の合計が多い姿勢点を選ぶ
             '合計が同じ場合は辛い姿勢を優先する
 
-            '条件AからE
+            '条件AからC
             If postureScoreCounterArray_A(mostOftenPostureScore_A) <= postureScoreCounterArray_A(j) Then
-                 mostOftenPostureScore_A = j
+                mostOftenPostureScore_A = j
             End If
 
             If postureScoreCounterArray_B(mostOftenPostureScore_B) <= postureScoreCounterArray_B(j) Then
-                 mostOftenPostureScore_B = j
+                mostOftenPostureScore_B = j
             End If
 
             If postureScoreCounterArray_C(mostOftenPostureScore_C) <= postureScoreCounterArray_C(j) Then
-                 mostOftenPostureScore_C = j
+                mostOftenPostureScore_C = j
             End If
 
         Next
@@ -625,9 +580,7 @@ Sub paintPostureScore(processingRange As Long)
         mostOftenReliability = 1
             '信頼性1～3の先頭から順に比較
             '1:測定、2:推定、3:欠損
-'        Debug.Print "1", reliabilityCounterArray(1)
         For j = 2 To 3
-'            Debug.Print j, reliabilityCounterArray(j)
             'フレーム数の合計が多い姿勢点を選ぶ
             '合計が同じ場合は信頼性が低い方を優先する
             If reliabilityCounterArray(mostOftenReliability) <= reliabilityCounterArray(j) Then
@@ -660,30 +613,14 @@ Sub paintPostureScore(processingRange As Long)
         '---------------------------------------------
         With ThisWorkbook.ActiveSheet
 
-
-            '最も多かった姿勢点に応じて
-            'セルの選択範囲、色を変更
-            '1点の場合は赤  202212219_下里
-'            If mostOftenPostureScore = 1 Then
-'                colorStr = colorResultRed   ' フラグ1
-'            Else
-'                colorStr = colorResultWhite ' フラグ0
-'            End If
-
-
-            '~~~~~~~~~~~~~~~追加~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
             '-------------条件A
             '0点の場合、白
             If mostOftenPostureScore_A = 0 Then
                 colorStr1 = colorResultWhite
 
-
             '1点の場合、赤
             ElseIf mostOftenPostureScore_A = 1 Then
                 colorStr1 = colorResultRed
-
             End If
 
 '            -------------条件B
@@ -694,7 +631,6 @@ Sub paintPostureScore(processingRange As Long)
             '1点の場合、赤
             ElseIf mostOftenPostureScore_B = 1 Then
                 colorStr2 = colorResultRed
-
             End If
 
 '            -------------条件C
@@ -705,12 +641,9 @@ Sub paintPostureScore(processingRange As Long)
             '1点の場合、赤
             ElseIf mostOftenPostureScore_C = 1 Then
                 colorStr3 = colorResultRed
-
             End If
 
-
             '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 
             '色をクリア
             .Range _
@@ -719,7 +652,6 @@ Sub paintPostureScore(processingRange As Long)
                 .Cells(ROW_POSTURE_SCORE_TOP, COLUMN_ZERO_NUM + i + preClm) _
             ) _
             .Interior.ColorIndex = 0
-
 
             '~~~~~~~~~~~~~~~追加~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             '色を塗る
@@ -733,7 +665,6 @@ Sub paintPostureScore(processingRange As Long)
                 .Interior.Color = colorStr1
             End If
 
-
             '条件B
             If mostOftenPostureScore_B = 0 Or 1 Then
 
@@ -744,7 +675,6 @@ Sub paintPostureScore(processingRange As Long)
                 ) _
                 .Interior.Color = colorStr2
             End If
-
 
             '条件C
             If mostOftenPostureScore_C = 0 Or 1 Then
@@ -757,10 +687,7 @@ Sub paintPostureScore(processingRange As Long)
                 .Interior.Color = colorStr3
             End If
 
-
             '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
 
             '最も多かった信頼性に応じて
             '色を変更
@@ -780,8 +707,8 @@ Sub paintPostureScore(processingRange As Long)
             ) _
             .Interior.Color = colorStr
 
-        End With 'With ThisWorkbook.Sheets("姿勢評価修正シート")
-    Next 'i = wholeStart To wholeEnd
+        End With
+    Next
 
     ' キャンセルボタン以外からの処理の時
     If 1 < processingRange Then
@@ -798,11 +725,13 @@ Sub paintPostureScore(processingRange As Long)
 
 End Sub
 
+
 '『全体を処理』ボタンが押されたとき
 '全体の姿勢点を計算して、色を塗る
 Sub paintAll()
     Call paintPostureScore(2)
 End Sub
+
 
 '『Cancel』ボタンが押されたとき
 '選択範囲の姿勢点を計算して、色を塗る（強制ボタンのキャンセル）
@@ -816,6 +745,7 @@ Sub paintSelected()
 
     Call paintPostureScore(1)
 End Sub
+
 
 '塗りつぶしを全てクリア
 Sub clear(ws As Worksheet)
@@ -863,20 +793,17 @@ Sub forceResult(postureScorebutton As Long)
     colorMeasureSection = RGB(0, 176, 240)   '水色
     colorPredictSection = RGB(252, 246, 0)   '黄色
     colorMissingSection = RGB(255, 124, 128) 'ピンク
-    colorForcedSection = RGB(0, 51, 204)     '青色
-    colorRemoveSection = RGB(191, 191, 191)  'グレー
+    colorForcedSection  = RGB(0, 51, 204)    '青色
+    colorRemoveSection  = RGB(191, 191, 191) 'グレー
     '姿勢点
-    colorResultGreen = RGB(0, 176, 80)       '緑色
-    colorResultYellow = RGB(255, 192, 0)     '黄色
-    colorResultRed = RGB(192, 0, 0)          '赤色
-    colorResultGlay = RGB(191, 191, 191)     'グレー
-    colorResultWhite = RGB(255, 255, 255)    '白色
-    colorResultBrown = RGB(64, 0, 0)         '茶色
-    colorResultOFFGlay = RGB(217, 217, 217)  '判定オフ用のグレー
+    colorResultGreen    = RGB(0, 176, 80)    '緑色
+    colorResultYellow   = RGB(255, 192, 0)   '黄色
+    colorResultRed      = RGB(192, 0, 0)     '赤色
+    colorResultGlay     = RGB(191, 191, 191) 'グレー
+    colorResultWhite    = RGB(255, 255, 255) '白色
+    colorResultBrown    = RGB(64, 0, 0)      '茶色
+    colorResultOFFGlay  = RGB(217, 217, 217) '判定オフ用のグレー
 
-'    If DataAjsSht.activeCells <= 6 Then
-'        Exit Sub
-'    End If
     Dim baseClm As Long
     Dim shtPage As Long
     shtPage = calcSheetNamePlace(ThisWorkbook.ActiveSheet)
@@ -899,7 +826,6 @@ Sub forceResult(postureScorebutton As Long)
     '---------------------------------------------
     'ここから強制処理
     '---------------------------------------------
-'    With ThisWorkbook.Sheets("姿勢評価修正シート")
     With ThisWorkbook.ActiveSheet
         '修正シートの選択範囲はポイント計算シートからはみ出さない範囲にあること
         '修正シートの選択範囲は色塗りできる範囲にあること
@@ -942,7 +868,6 @@ Sub forceResult(postureScorebutton As Long)
 
                 Else
 
-
                     postur_row = Selection.row
 
                     '===強制時、ほかの列の除外を解除し、除外だった場所に元のデータどおりに色を付けなおす処理===
@@ -950,13 +875,11 @@ Sub forceResult(postureScorebutton As Long)
                     For m = MinLeftCell To MaxRightCell
                         If .Cells(ROW_POSTURE_SCORE_KOBUSHIAGE, m).Interior.Color = colorResultGlay Then
                             Call paintPostureScore(m)
-                            'Debug.Print m
                         End If
                     Next
                     '===========================================================================================
 
                     '姿勢点のセルに押されたボタンの姿勢点
-                    ' 修正　20221219_下里
                     '1点の場合は赤
                     If postureScorebutton = 1 Then
                         .Range _
@@ -975,6 +898,7 @@ Sub forceResult(postureScorebutton As Long)
                         ) _
                         .Interior.Color = colorResultOFFGlay
                     End If
+
                     '信頼性のセルに強制色をぬる
                     .Range _
                     ( _
@@ -983,18 +907,19 @@ Sub forceResult(postureScorebutton As Long)
                     ) _
                     .Interior.Color = colorForcedSection
 
-                End If 'If postureScorebutton <= 2 Then
+                End If
                 '強制のときは単独で実行
                 Call checkReliabilityRatio
-            End If 'If postureScorebutton = -1 Then
+            End If
         Else
             MsgBox "範囲はグラフ内から選択してください", vbOKOnly + vbCritical, "範囲選択エラー"
-        End If 'If Not (Selection.row = ROW_POSTURE_SCORE_KOBUSHIAGE Or
-    End With 'With ThisWorkbook.Sheets("姿勢評価修正シート")
+        End If
+    End With
 
     Call checkReliabilityRatio
 
 End Sub
+
 
 '点数に応じて数値を指定の列に値を挿入する
 '引数1：選択範囲の左端のセル
@@ -1013,9 +938,7 @@ Sub postureUpdate(sclm As Long, fclm As Long, bit As Long, score As Long)
     Dim fbit As Long
     Dim vle  As Long
 
-
     Dim column_forced_num As Long
-
 
     If Selection.row = ROW_POSTURE_SCORE_KOBUSHIAGE Then
         column_forced_num = COLUMN_POSTURE_SCORE_KOBUSHIAGE
@@ -1025,12 +948,9 @@ Sub postureUpdate(sclm As Long, fclm As Long, bit As Long, score As Long)
         column_forced_num = COLUMN_POSTURE_SCORE_HIZAMAGE
     End If
 
-
     'ポイント計算シートでは1行目から値を数えないで2行目からとなるため+1
     s = sclm - COLUMN_ZERO_NUM + 1
     last = fclm - COLUMN_ZERO_NUM + 1
-
-
 
     For i = s To last
 
@@ -1051,7 +971,6 @@ Sub postureUpdate(sclm As Long, fclm As Long, bit As Long, score As Long)
             Else
                 vle = score
             End If
-
 
             Call baseScore(i, bit)
             .Cells(i, COLUMN_POSTURE_SCORE_ALL).Value = vle
@@ -1135,6 +1054,7 @@ Sub reliabilityUpdate(row As Long, bit As Long, vle As Long, column_forced_num A
 
 End Sub
 
+
 '元データ列へ挿入する
 '引数1：データを挿入するセルの行
 '引数2：戻るから呼ばれたら0、それ以外は1
@@ -1144,27 +1064,30 @@ Sub baseScore(row As Long, bit As Long)
             If .Cells(row, COLUMN_BASE_SCORE).Value = "" Then
                 .Cells(row, COLUMN_BASE_SCORE).Value = .Cells(row, COLUMN_POSTURE_SCORE_ALL).Value
             End If
-
         Else
             .Cells(row, COLUMN_POSTURE_SCORE_ALL).Value = .Cells(row, COLUMN_BASE_SCORE).Value
         End If
     End With
 End Sub
 
+
 '『初期化』ボタンが押されたとき
 Sub reset()
     Call forceResult(-1)
 End Sub
+
 
 '姿勢点『0』強制ボタンが押されたとき
 Sub force0()
     Call forceResult(0)
 End Sub
 
+
 '姿勢点『1』強制ボタンが押されたとき
 Sub force1()
     Call forceResult(1)
 End Sub
+
 
 '姿勢点『除外』強制ボタンが押されたとき
 Sub jogai()
@@ -1172,33 +1095,32 @@ Sub jogai()
 End Sub
 
 
-
 'データ区間の割合を計算
 Sub checkReliabilityRatio()
     '変数定義
-    Dim i              As Long
+    Dim i                               As Long
     'フレームレート
-    Dim fps            As Double
+    Dim fps                             As Double
     'ポイント計算シート最終行
-    Dim maxRowNum      As Long
+    Dim maxRowNum                       As Long
     '姿勢評価修正シートの最終列
-    Dim ColumnNum      As Long
+    Dim ColumnNum                       As Long
     '配列の最終値
-    Dim maxArrayNum    As Long
+    Dim maxArrayNum                     As Long
     '信頼性の番号
     '1:測定、2:推定、3:欠損、4:強制、5:除外
-    Dim reliabilityFlag As Long
+    Dim reliabilityFlag                 As Long
     '信頼性の割合
-    Dim measurementSectionRatio As Double
-    Dim predictSectionRatio     As Double
-    Dim missingSectionRatio     As Double
-    Dim coercionSectionRatio    As Double
-    Dim exclusionSectionRatio   As Double
-    Dim totalRatio              As Double
+    Dim measurementSectionRatio         As Double
+    Dim predictSectionRatio             As Double
+    Dim missingSectionRatio             As Double
+    Dim coercionSectionRatio            As Double
+    Dim exclusionSectionRatio           As Double
+    Dim totalRatio                      As Double
 
     '配列定義
     '色を保存する配列
-    Dim reliabilityColorDataArray()    As Long
+    Dim reliabilityColorDataArray()     As Long
     '色をカウントする配列
     '信頼性１～３のフレーム数をそれぞれ合計
     '1:測定、2:推定、3:欠損、4:強制、5:除外
@@ -1232,7 +1154,7 @@ Sub checkReliabilityRatio()
         fps = .Cells(2, 199)
         '最終行を取得
         maxRowNum = .Cells(1, 3).End(xlDown).row
-    End With 'ThisWorkbook.Sheets("ポイント計算シート")
+    End With
 
     '姿勢評価修正シート
     Dim sName()  As String
@@ -1241,11 +1163,6 @@ Sub checkReliabilityRatio()
 
     '余分を消す
     maxRowNum = maxRowNum - 1
-
-
-    '姿勢評価修正シートの色入力のある列数を調べる
-'    ColumnNum = Int(((maxRowNum - 1) / fps) / UNIT_TIME)
-
 
     '一番右の列数を取得
     With ThisWorkbook.Sheets("姿勢評価修正シート")
@@ -1330,9 +1247,10 @@ CONTINUE:
             '推定+欠損
             .Cells(6, 5) = Round(predictSectionRatio + missingSectionRatio, 1) & "%"
 
-        End With 'With ThisWorkbook.Sheets("姿勢評価修正シート")
+        End With
     Next
 End Sub
+
 
 '拡大ボタン、縮小ボタンが押されたときに実行される処理
     '引数：expansionFlag As Long　幅の拡大or縮小を決める
@@ -1374,12 +1292,12 @@ Sub adjustWidth(expansionFlag As Boolean)
     Set actSheet = ActiveSheet
     sName() = call_GetSheetNameToArrayspecific(ThisWorkbook, "姿勢評価修正シート")
     For n = 1 To UBound(sName)
-'        Debug.Print n, sName(n)
         Call DataAjsSht.SetCellsHW(CInt(wSize), ThisWorkbook.Sheets(sName(n)))
     Next
     actSheet.Activate
     Call restartUpdate
 End Sub
+
 
 '『幅拡大』ボタンが押されたとき
 Sub expandWidth()
@@ -1397,13 +1315,13 @@ Sub reduceWidth()
 End Sub
 
 
-'１画面左へスクロール
+'1画面左へスクロール
 Sub scrollToLeftPage()
         ActiveWindow.LargeScroll ToLeft:=1
 End Sub
 
 
-'１画面右へスクロール
+'1画面右へスクロール
 Sub scrollToRightPage()
         If ActiveWindow.VisibleRange.Column + ActiveWindow.VisibleRange.Columns.Count <= _
         ActiveSheet.Cells(TIME_ROW, Columns.Count).End(xlToLeft).Column Then
@@ -1419,7 +1337,7 @@ Sub scrollToLeftEnd()
         If getPageShapeState(ActiveSheet, "prevPage") Then
             Call prevPage_Click
         Else
-             Call initCellPlace(ActiveSheet)
+            Call initCellPlace(ActiveSheet)
         End If
     Else
         Call initCellPlace(ActiveSheet)
@@ -1440,23 +1358,15 @@ Sub scrollToRightEnd()
         End If
     Else
         keepColumn = keepColumn * 0 + ActiveSheet.Cells(TIME_ROW, Columns.Count).End(xlToLeft).Column
-        '一番右へ
-    '    ActiveWindow.ScrollColumn = ThisWorkbook.Sheets("姿勢評価修正シート").Cells(26, Columns.Count).End(xlToLeft).Column + 1
-    '    MsgBox ThisWorkbook.Sheets("姿勢評価修正シート").Cells(26, Columns.Count).End(xlToLeft).Column + 29
-    '    ActiveWindow.Panes(2).ScrollColumn = ThisWorkbook.Sheets("姿勢評価修正シート").Cells(26, Columns.Count).End(xlToLeft).Column - 29
-'        ActiveWindow.Panes(2).ScrollColumn = ActiveSheet.Cells(BOTTOM_OF_TABLE, Columns.Count).End(xlToLeft).Column - 32
 
         ActiveWindow.SmallScroll ToLeft:=ActiveWindow.Panes(2).VisibleRange.Cells.Columns.Count
-        '行き過ぎたぶん調整する
-        '1ページ左へ戻る
-    '    ActiveWindow.LargeScroll ToLeft:=1
 
         '以下の分岐は今後はいらない可能性がある
         '少し右へ
         If ActiveSheet.Cells(TIME_ROW, Columns.Count).End(xlToLeft).Column = 16192 Then
             ActiveWindow.SmallScroll ToRight:=5
         Else
-            '３秒分ずらす(=30fps * 3)
+            '3秒分ずらす(=30fps * 3)
             ActiveWindow.SmallScroll ToRight:=90
         End If
 
@@ -1465,13 +1375,13 @@ Sub scrollToRightEnd()
     End If
 End Sub
 
+
 '現在のカラムを保持する
 Private Function getClm(clm As Long)
     Static keepColumn As Long
     Dim ret As Boolean: ret = False
 
     If keepColumn = clm Then
-'        keepColumn = -1
         ret = True
     Else
         keepColumn = keepColumn * 0 + clm
@@ -1514,31 +1424,29 @@ Sub RegularInterval3()
         End With
     Next
 
-
     l = ActiveCell.Column
     If l < TIME_COLUMN_LEFT Then
         ActiveSheet.Cells(BOTTOM_OF_TABLE, TIME_COLUMN_LEFT).Select
-        '２秒から始まるように見えるため１秒待機する
+        '2秒から始まるように見えるため1秒待機する
         Application.Wait Now() + TimeValue("00:00:01")
     End If
-
-
 
     'activesheetでコピー先にも対応する
 
     '変数ResTimeに現在の1秒後の時刻を格納
-     ResTime = Now + TimeValue("00:00:01")
+    ResTime = Now + TimeValue("00:00:01")
 
     'ApplicationオブジェクトのOnTimeメソッドを使用
     'EarliestTime : 実行時刻(現時刻から1秒後）
     'Procedure : 実行プロシージャ名。自分自身を指定して繰り返し処理
-     Application.OnTime EarliestTime:=ResTime, _
-     Procedure:="RegularInterval3"
+    Application.OnTime EarliestTime:=ResTime, _
+    Procedure:="RegularInterval3"
 
     '「TestSample1」プロシージャの呼び出し
-     Call nextTimeSelect
+    Call nextTimeSelect
 
 End Sub
+
 
 '時刻選択処理
 Sub nextTimeSelect()
@@ -1550,7 +1458,7 @@ Sub nextTimeSelect()
     '一つ右のセルを選択
     ActiveCell.Offset(0, 1).Select
 
-    '１秒分スクロール
+    '1秒分スクロール
     ActiveWindow.SmallScroll ToRight:=TIME_WIDTH
 
     '時刻が表示されていない時は、処理を変更する必要がある
@@ -1563,11 +1471,8 @@ Sub nextTimeSelect()
         End If
     End If
 
-'    '信頼性、姿勢点、時刻を選択
-'    ActiveCell.Offset(-21, 0).Select
-'    Selection.Resize(22, 10).Select
-
 End Sub
+
 
 '停止ボタン
 Sub Cancel3()
@@ -1588,9 +1493,8 @@ Sub Cancel3()
     Application.OnTime EarliestTime:=ResTime, _
     Procedure:="RegularInterval3", Schedule:=False
 
-' MsgBox "再生を停止しました", vbInformation
-
 End Sub
+
 
 'メッセージボックスの表示
 '戻り値：メッセージボックス
@@ -1630,10 +1534,10 @@ End Sub
 '引数1：シート
 '戻り値：シートが何番目に属しているか
 Function calcSheetNamePlace(ws As Worksheet)
-    Dim shNameArray() As String
-    Dim i As Long
-    Dim iend As Long
-    Dim ret As Long: ret = 0
+    Dim shNameArray()   As String
+    Dim i               As Long
+    Dim iend            As Long
+    Dim ret             As Long: ret = 0
 
     shNameArray() = call_GetSheetNameToArrayspecific(ThisWorkbook, "姿勢評価修正シート")
     iend = UBound(shNameArray)
@@ -1651,11 +1555,11 @@ End Function
 '戻り値：姿勢評価修正シートの名前を格納した配列
 Function call_GetSheetNameToArrayspecific(wb As Workbook, str As String)
 
-    Dim tmp() As String
-    Dim ws As Worksheet
-    Dim i As Long: i = 0
-    Dim istr As Long
-    Dim scnt As Long
+    Dim tmp()   As String
+    Dim ws      As Worksheet
+    Dim i       As Long: i = 0
+    Dim istr    As Long
+    Dim scnt    As Long
     scnt = wb.Worksheets.Count
 
     For istr = 1 To scnt
@@ -1666,15 +1570,6 @@ Function call_GetSheetNameToArrayspecific(wb As Workbook, str As String)
             tmp(i) = ws.Name
         End If
     Next
-
-'    For Each ws In wb.Worksheets
-'        '■シート名がstrを含めば配列に格納
-'        If InStr(ws.Name, str) > 0 Then
-'            i = i + 1
-'            ReDim Preserve tmp(1 To i)
-'            tmp(i) = ws.Name
-'        End If
-'    Next ws
 
     call_GetSheetNameToArrayspecific = tmp
 End Function
@@ -1694,6 +1589,7 @@ Private Sub addPageShape(ws As Worksheet, pPageState As Boolean, nPageState As B
     ws.Shapes(nPage).Visible = nPageState
 End Sub
 
+
 '図形がVisibleかどうか判定する
 '引数1：ワークシート
 '引数2：図形の名前
@@ -1702,18 +1598,19 @@ Private Function getPageShapeState(ws As Worksheet, shapeName As String)
     getPageShapeState = ws.Shapes(shapeName).Visible
 End Function
 
+
 'ワークシートをコピーし、右に挿入
-
-
 Sub createSheet(endclm As Long)
     ThisWorkbook.ActiveSheet.Copy After:=ActiveSheet
 End Sub
+
 
 'ひとつ前のシートをアクティブにし、データの最後尾まで行く
 Sub prevPage_Click()
     ThisWorkbook.ActiveSheet.Previous.Activate
     Call finCellPlace(ThisWorkbook.ActiveSheet)
 End Sub
+
 
 'ひとつ次のシートをアクティブにし、データの最初に行く
 Sub nextPage_Click()
@@ -1727,10 +1624,12 @@ Private Sub initCellPlace(ws As Worksheet)
     ws.Cells(TIME_ROW, TIME_COLUMN_LEFT).Select
 End Sub
 
+
 'セルの最終位置
 Private Sub finCellPlace(ws As Worksheet)
     ws.Cells(TIME_ROW, ws.Cells(TIME_ROW, Columns.Count).End(xlToLeft).Column).Select
 End Sub
+
 
 '段階的にサイズの変更処理をする為の関数
 '引数1：画面の拡大率
@@ -1848,34 +1747,35 @@ Sub resetSheet()
 End Sub
 
 
-
 '非表示の名前の定義を再表示　20230215　早川　シートコピー時に発生するエラー対策
 Public Sub ShowInvisibleNames()
     Dim oName As Object
     For Each oName In Names
         If oName.Visible = False Then
-          oName.Visible = True
+            oName.Visible = True
         End If
     Next
     MsgBox "非表示の名前の定義を表示しました。", vbOKOnly
 End Sub
+
 
 Private Sub UserForm_Terminate()
     MsgBox "Excelの画面を表示します"
     Application.Visible = True
 End Sub
 
+
 ' 選択範囲をデータ有効域とチェックし有効内の値を返す
 ' 戻り値 : True → 交差あり（ leftCol/rightCol が返る ）
 '          False → 交差なし（メッセージは呼び出し側で）
 Public Function CropSelectionToDataArea(ByRef leftCol As Long, ByRef rightCol As Long) As Boolean
-    Const PAGE_FRAME_MAX As Long = LIMIT_COLUMN '16200
-    Dim shtPage   As Long
-    Dim baseClm   As Long
-    Dim selR      As Long              '選択列
-    Dim frmR      As Long              '選択フレーム
-    Dim pageFrmR  As Long              'ページの有効フレーム
-    Dim totalFrm  As Long
+    Const PAGE_FRAME_MAX    As Long = LIMIT_COLUMN '16200
+    Dim shtPage             As Long
+    Dim baseClm             As Long
+    Dim selR                As Long '選択列
+    Dim frmR                As Long '選択フレーム
+    Dim pageFrmR            As Long 'ページの有効フレーム
+    Dim totalFrm            As Long
 
     'ボタン列を一緒に選んだら無視
     If Selection.Column > Columns.Count Then
@@ -1907,5 +1807,3 @@ Public Function CropSelectionToDataArea(ByRef leftCol As Long, ByRef rightCol As
         CropSelectionToDataArea = True
     End If
 End Function
-
-
