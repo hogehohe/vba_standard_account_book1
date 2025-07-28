@@ -709,13 +709,13 @@ End Sub
 '『Cancel』ボタンが押されたとき
 '選択範囲の姿勢点を計算して、色を塗る（強制ボタンのキャンセル）
 Sub paintSelected()
-    '引数1:processingRange As Long 処理範囲を決める
 
-    '後で修正することになるが、7列目より小さい列が選択されていたら処理をしない
+    ' 選択範囲の左端の列が「0列目（＝姿勢点列）」以下なら処理をスキップ
     If DataAjsSht.activeCells <= COLUMN_ZERO_NUM Then
         Exit Sub
     End If
 
+    ' 選択範囲のみ再描画
     Call paintPostureScore(1)
 End Sub
 
