@@ -279,35 +279,20 @@ Sub paintPostureScore(processingRange As Long)
     'RGBを指定するための変数を定義
     '---------------------------------------------
     '信頼性
-    Dim colorMeasureSection    As String '水色
-    Dim colorPredictSection    As String '黄色
-    Dim colorMissingSection    As String 'ピンク
-    Dim colorForcedSection     As String '青色
-    Dim colorRemoveSection     As String 'グレー
+    Dim colorMeasureSection    As Long: colorMeasureSection = RGB(0, 176, 240)   '水色
+    Dim colorPredictSection    As Long: colorPredictSection = RGB(252, 246, 0)   '黄色
+    Dim colorMissingSection    As Long: colorMissingSection = RGB(255, 124, 128) 'ピンク
+    Dim colorForcedSection     As Long: colorForcedSection  = RGB(0, 51, 204)    '青色
+    Dim colorRemoveSection     As Long: colorRemoveSection  = RGB(191, 191, 191) 'グレー
 
     '姿勢点
-    Dim colorResultGreen       As String '緑色
-    Dim colorResultYellow      As String '黄色
-    Dim colorResultRed         As String '赤色
-    Dim colorResultGlay        As String 'グレー
-    Dim colorResultWhite       As String '白色 20221219_下里
-
-    '---------------------------------------------
-    '変数に色をセット
-    '---------------------------------------------
-    '1:測定、2:推定、3:欠損、4:強制、5:除外
-    '信頼性
-    colorMeasureSection = RGB(0, 176, 240)   '水色
-    colorPredictSection = RGB(252, 246, 0)   '黄色
-    colorMissingSection = RGB(255, 124, 128) 'ピンク
-    colorForcedSection  = RGB(0, 51, 204)    '青色
-    colorRemoveSection  = RGB(191, 191, 191) 'グレー
-    '姿勢点
-    colorResultGreen    = RGB(0, 176, 80)    '緑色
-    colorResultYellow   = RGB(255, 192, 0)   '黄色
-    colorResultRed      = RGB(192, 0, 0)     '赤色
-    colorResultGlay     = RGB(191, 191, 191) 'グレー
-    colorResultWhite    = RGB(255, 255, 255) '白色
+    Dim colorResultGreen       As Long: colorResultGreen    = RGB(0, 176, 80)    '緑色
+    Dim colorResultYellow      As Long: colorResultYellow   = RGB(255, 192, 0)   '黄色
+    Dim colorResultRed         As Long: colorResultRed      = RGB(192, 0, 0)     '赤色
+    Dim colorResultGlay        As Long: colorResultGlay     = RGB(191, 191, 191) 'グレー
+    Dim colorResultWhite       As Long: colorResultWhite    = RGB(255, 255, 255) '白色 20221219_下里
+    Dim colorResultBrown       As Long: colorResultBrown    = RGB(64, 0, 0)      '茶色 20221222_下里
+    Dim colorResultOFFGlay     As Long: colorResultOFFGlay  = RGB(217, 217, 217) 'グレー 20221222_下里
 
     '---------------------------------------------
     '配列
@@ -317,7 +302,7 @@ Sub paintPostureScore(processingRange As Long)
 
     '~~~~~~~~~~~~~~~~追加~~~~~~~~~~~~~~~~~~~
 
-    '条件A,B,C,D,Eごとの姿勢点を保管
+    '条件A,B,Cごとの姿勢点を保管
     Dim postureScoreDataArray_A()  As Long
     Dim postureScoreDataArray_B()  As Long
     Dim postureScoreDataArray_C()  As Long
@@ -349,7 +334,6 @@ Sub paintPostureScore(processingRange As Long)
     '変数定義
     Dim i                       As Long
     Dim j                       As Long
-
     Dim fps                     As Double
 
     '単位時間の繰り返し処理の開始終了地点を定義
@@ -371,7 +355,7 @@ Sub paintPostureScore(processingRange As Long)
 
     '~~~~~~~~~~~~~~~~追加~~~~~~~~~~~~~~~~~~~
 
-    'AからEの姿勢点一時記憶用の変数
+    'AからCの姿勢点一時記憶用の変数
     Dim mostOftenPostureScore_A As Long
     Dim mostOftenPostureScore_B As Long
     Dim mostOftenPostureScore_C As Long
@@ -384,12 +368,11 @@ Sub paintPostureScore(processingRange As Long)
     Dim mostOftenReliability    As Long
 
     '次ページにいく制限
-    Dim thisPageLimit           As Long
-    thisPageLimit = LIMIT_COLUMN
+    Dim thisPageLimit           As Long: thisPageLimit = LIMIT_COLUMN
 
     '前のページの最終列を保存する
-    Dim preClm      As Long
-    preClm = 0
+    Dim preClm  As Long: preClm = 0
+
     Call stopUpdate
 
     Dim baseClm     As Long
@@ -413,10 +396,11 @@ Sub paintPostureScore(processingRange As Long)
     '---------------------------------------------
     With ThisWorkbook.Sheets("ポイント計算シート")
         '最終行を取得
-        maxRowNum = .Cells(1, 3).End(xlDown).row
+        maxRowNum = getLastRow()
         '配列の最後尾
-'        余分を削除
+        '余分を削除
         maxRowNum = maxRowNum - 1
+
         '配列を再定義
         ReDim postureScoreDataArray_A(maxRowNum, 0)
         ReDim postureScoreDataArray_B(maxRowNum, 0)
@@ -512,7 +496,7 @@ Sub paintPostureScore(processingRange As Long)
 
         Call DataAjsSht.SetCellsHW(CInt(wSize), Worksheets("姿勢評価修正シート"))
 
-    '除外があるフレームに強制を上書きしたとき（１セルずつ実行）
+    '除外があるフレームに強制を上書きしたとき（1セルずつ実行）
     Else
         shtPage = calcSheetNamePlace(ThisWorkbook.ActiveSheet)
         baseClm = LIMIT_COLUMN * shtPage
