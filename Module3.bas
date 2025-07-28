@@ -792,7 +792,7 @@ Sub forceResult(postureScorebutton As Long)
                 '下が今まで戻るボタンを押したときにキックされるマクロ
                 Call paintPostureScore(1)
 
-            '強制(0～１１の姿勢点ボタン)
+            '強制(0 ~ 11の姿勢点ボタン)
             ElseIf postureScorebutton >= 0 Then
 
                 Call postureUpdate(MinLeftCell + baseClm, MaxRightCell + baseClm, 1, CInt(postureScorebutton))
@@ -828,7 +828,7 @@ Sub forceResult(postureScorebutton As Long)
                             Call paintPostureScore(m)
                         End If
                     Next
-                    '===========================================================================================
+                    '====================================================================================
 
                     '姿勢点のセルに押されたボタンの姿勢点
                     '1点の場合は赤
@@ -872,25 +872,30 @@ Sub forceResult(postureScorebutton As Long)
 End Sub
 
 
-'点数に応じて数値を指定の列に値を挿入する
-'引数1：選択範囲の左端のセル
-'引数2：選択範囲の右端のセル
-'引数3：戻るから呼ばれたら0、それ以外は1
-'引数4：どのボタンから呼ばれたかを区別するID
-'       戻る   ：-1
-'       強制ON ：1
-'       強制OFF：0
-'       除外   ：99
+'------------------------------------------------------------
+' ポイント計算シートの姿勢点・信頼性を更新
+'
+' 【引数】
+'   sclm  - 選択範囲の左端列番号（実際の列位置）
+'   fclm  - 選択範囲の右端列番号（実際の列位置）
+'   bit   - 初期化フラグ（0:初期化 / 1:強制）※未使用？
+'   score - 姿勢点（-1:初期化, 1?10:強制, 99:除外）
+'
+' 【処理概要】
+'   - 選択行に応じて「姿勢スコアの列番号（強制）」を決定
+'   - 指定範囲の各列について姿勢点を更新
+'   - 信頼性の更新も実施
+'------------------------------------------------------------
 Sub postureUpdate(sclm As Long, fclm As Long, bit As Long, score As Long)
 
-    Dim s    As Long
-    Dim last As Long
-    Dim i    As Long
-    Dim fbit As Long
-    Dim vle  As Long
-
+    Dim s                As Long
+    Dim last             As Long
+    Dim i                As Long
+    Dim fbit             As Long
+    Dim vle              As Long
     Dim column_forced_num As Long
 
+    ' 選択行に応じて強制スコアの対象列番号を設定
     If Selection.row = ROW_POSTURE_SCORE_KOBUSHIAGE Then
         column_forced_num = COLUMN_POSTURE_SCORE_KOBUSHIAGE
     ElseIf Selection.row = ROW_POSTURE_SCORE_KOSHIMAGE Then
@@ -899,38 +904,46 @@ Sub postureUpdate(sclm As Long, fclm As Long, bit As Long, score As Long)
         column_forced_num = COLUMN_POSTURE_SCORE_HIZAMAGE
     End If
 
-    'ポイント計算シートでは1行目から値を数えないで2行目からとなるため+1
+    ' データ列へのオフセット変換（データは2行目から）
     s = sclm - COLUMN_ZERO_NUM + 1
     last = fclm - COLUMN_ZERO_NUM + 1
 
+    ' 姿勢点の更新ループ（s ～ last 列）
     For i = s To last
-
         With ThisWorkbook.Sheets("ポイント計算シート")
+
+            ' 初期化フラグに応じたスコア決定
             fbit = .Cells(i, COLUMN_FORCED_SECTION_TOTAL).Value
 
-            If bit = 0 Then
+            If bit = 0 Then ' 初期化処理
                 If fbit = 0 Then
                     vle = .Cells(i, COLUMN_POSTURE_SCORE_ALL).Value
                 Else
                     vle = .Cells(i, COLUMN_BASE_SCORE).Value
                 End If
 
-                '姿勢素点除外区間にビットが立っている
+                ' 姿勢素点除外区間（除外フラグあり）
                 If .Cells(i, COLUMN_REMOVE_SECTION).Value = 1 Then
                     vle = .Cells(i, COLUMN_BASE_SCORE).Value
                 End If
-            Else
+
+            Else ' 強制設定
                 vle = score
             End If
 
+            ' 基礎スコア処理（呼び出し）および更新
             Call baseScore(i, bit)
             .Cells(i, COLUMN_POSTURE_SCORE_ALL).Value = vle
+
         End With
 
+        ' 信頼性の更新
         Call reliabilityUpdate(i, bit, vle, column_forced_num)
+
     Next
 
 End Sub
+
 
 '姿勢素点強制区間にビットを立てる処理
 '引数1：ポイント計算シートの修正するセルの行
