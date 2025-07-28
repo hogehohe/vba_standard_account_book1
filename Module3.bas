@@ -150,9 +150,9 @@ Sub autoFillTemplate()
     '作業時間を取得する
     With ThisWorkbook.Sheets("ポイント計算シート")
         'フレームレートを取得
-        fps = .Cells(2, 199)
+        fps = getFps()
         '最終行の値を取得
-        maxFrameNum = .Cells(.Cells(1, 1).End(xlDown).row, 1).Value
+        maxFrameNum = getLastRow()
     End With
 End Sub
 
@@ -441,7 +441,7 @@ Sub paintPostureScore(processingRange As Long)
             End If
         Next
         'フレームレートを取得
-        fps = .Cells(2, 199).Value
+        fps = getFps()
         Dim video_sec As Double: video_sec = wholeEnd / fps
 
     End With
@@ -1151,9 +1151,9 @@ Sub checkReliabilityRatio()
     '---------------------------------------------
     With ThisWorkbook.Sheets("ポイント計算シート")
         'フレームレートを取得
-        fps = .Cells(2, 199)
+        fps = getFps()
         '最終行を取得
-        maxRowNum = .Cells(1, 3).End(xlDown).row
+        maxRowNum = getLastRow()
     End With
 
     '姿勢評価修正シート
@@ -1512,7 +1512,7 @@ Sub Savebook()
     Dim fps          As Double
 
     'フレームレートを取得
-    fps = ThisWorkbook.Sheets("ポイント計算シート").Cells(2, 199)
+    fps = getFps()
 
     If YesorNo() = vbYes Then
 
@@ -1806,4 +1806,17 @@ Public Function CropSelectionToDataArea(ByRef leftCol As Long, ByRef rightCol As
         'フレーム → 列番号へ戻す
         CropSelectionToDataArea = True
     End If
+End Function
+
+'fpsの値を取得する
+'戻り値：fpsの値
+Function getFps() As Double
+    getFps = ThisWorkbook.Sheets("ポイント計算シート").Cells(2, 199).Value
+End Function
+
+
+'最終行を取得する
+'戻り値：最終行
+Function getLastRow() As Long
+    getLastRow = ThisWorkbook.Sheets("ポイント計算シート").Cells(1, 3).End(xlDown).row
 End Function
