@@ -1355,19 +1355,32 @@ Sub scrollToRightEnd()
     End If
 End Sub
 
-'現在のカラムを保持する
-Private Function getClm(clm As Long)
-    Static keepColumn As Long
-    Dim ret As Boolean: ret = False
+'------------------------------------------------------------
+' 同じ列に対して連続でスクロール処理が呼ばれたかを判定する
+'
+' 引数:
+'   clm - 現在のカラム番号（列位置）
+'
+' 戻り値:
+'   True  - 直前のカラムと同じ（連続呼び出し）
+'   False - カラムが変わった（初回または位置変更）
+'
+' 備考:
+'   Static変数 keepColumn によって、前回呼び出し時の列位置を記憶する。
+'------------------------------------------------------------
+Private Function getClm(clm As Long) As Boolean
+    Static keepColumn   As Long
+    Dim isSameColumn    As Boolean
 
     If keepColumn = clm Then
-        ret = True
+        isSameColumn = True
     Else
-        keepColumn = keepColumn * 0 + clm
+        keepColumn = clm
+        isSameColumn = False
     End If
-    getClm = ret
-End Function
 
+    getClm = isSameColumn
+End Function
 
 '表示倍率を画面にフィット
 Sub fit()
