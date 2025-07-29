@@ -1320,35 +1320,40 @@ Sub scrollToLeftEnd()
 End Sub
 
 
-'最も右へスクロール
+'------------------------------------------------------------
+' 右端スクロール処理
+'
+' 概要:
+'   姿勢素点修正シートの右端までスクロールする。
+'   すでに右端なら次ページへ移動（nextPageボタン相当）する。
+'
+' 備考:
+'   TIME_ROW：時刻行（列の終端判定に使用）
+'   getClm, getPageShapeState, finCellPlace は補助関数
+'------------------------------------------------------------
 Sub scrollToRightEnd()
-    '処理した時の一番右の列を覚えておく。
-    '同じ値で右に行くときは、次シートがあればそちらへ移行する。
     Dim keepColumn As Long
 
+    ' 右端に達しているかをチェック
     If getClm(ActiveSheet.Cells(TIME_ROW, Columns.Count).End(xlToLeft).Column) Then
+        ' ページ移動が可能なら次のページへ
         If getPageShapeState(ActiveSheet, "nextPage") Then
             Call nextPage_Click
         End If
     Else
-        keepColumn = keepColumn * 0 + ActiveSheet.Cells(TIME_ROW, Columns.Count).End(xlToLeft).Column
+        ' 現在の最右列を取得（※必要ならkeepColumnに保持可能）
+        keepColumn = ActiveSheet.Cells(TIME_ROW, Columns.Count).End(xlToLeft).Column
 
-        ActiveWindow.SmallScroll ToLeft:=ActiveWindow.Panes(2).VisibleRange.Cells.Columns.Count
+        ' スクロール位置を設定（見やすい位置まで29列戻す）
+        ActiveWindow.Panes(2).ScrollColumn = keepColumn - 29
 
-        '以下の分岐は今後はいらない可能性がある
-        '少し右へ
-        If ActiveSheet.Cells(TIME_ROW, Columns.Count).End(xlToLeft).Column = 16192 Then
-            ActiveWindow.SmallScroll ToRight:=5
-        Else
-            '3秒分ずらす(=30fps * 3)
-            ActiveWindow.SmallScroll ToRight:=90
-        End If
+        ' 小スクロールでスクロール範囲を表示に収める
+        ActiveWindow.SmallScroll ToLeft:=ActiveWindow.Panes(2).VisibleRange.Columns.Count
 
+        ' カーソル・セル位置の最終調整
         Call finCellPlace(ActiveSheet)
-
     End If
 End Sub
-
 
 '現在のカラムを保持する
 Private Function getClm(clm As Long)
