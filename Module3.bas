@@ -1625,13 +1625,20 @@ End Function
 '引数2：前ページに移動するアイコンを非表示にするかどうか（true or false）
 '引数3：次ページに移動するアイコンを非表示にするかどうか（true or false）
 Private Sub addPageShape(ws As Worksheet, pPageState As Boolean, nPageState As Boolean)
-    Const pPage As String = "prevPage"
-    Const nPage As String = "nextPage"
+    Const pPage     As String = "prevPage"
+    Const nPage     As String = "nextPage"
+    Const pCover    As String = "prevPage_Disabled"
+    Const nCover    As String = "nextPage_Disabled"
 
     Call initCellPlace(ws)
 
+    ' 表示可能なページ送りボタン
     ws.Shapes(pPage).Visible = pPageState
     ws.Shapes(nPage).Visible = nPageState
+
+    ' グレーのカバー画像（押せない状態の見た目）を逆に連動
+    ws.Shapes(pCover).Visible = Not pPageState
+    ws.Shapes(nCover).Visible = Not nPageState
 End Sub
 
 
