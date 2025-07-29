@@ -1447,7 +1447,7 @@ Sub RegularInterval1()
     ResTime = Now + TimeValue("00:00:01")
 
     ' 自身を1秒後に再実行する設定
-    Application.OnTime EarliestTime:=ResTime, Procedure:="RegularInterval1"
+    Application.OnTime EarliestTime:=ResTime, Procedure:="RegularInterval3"
 
     ' シート名確認（姿勢素点修正シートのみ継続）
     If ActiveSheet.Name Like "姿勢素点修正シート*" Then
