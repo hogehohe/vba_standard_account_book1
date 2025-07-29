@@ -1382,6 +1382,7 @@ Private Function getClm(clm As Long) As Boolean
     getClm = isSameColumn
 End Function
 
+
 '表示倍率を画面にフィット
 Sub fit()
     '見えている列範囲を取得
@@ -1401,42 +1402,59 @@ Sub fit()
 End Sub
 
 
-'再生ボタン
-'時刻選択のインターバル
-Sub RegularInterval3()
-    Dim iend, i As Long
-    Dim dajsht() As String
-    Dim l As Long
+'------------------------------------------------------------
+' 再生ボタン処理
+'
+' 概要:
+'   姿勢素点修正シート上で再生ボタンが押された際に、
+'   時間カラムの自動選択処理を定期的に実行する。
+'
+' 引数:
+'   なし（グローバル変数 ResTime を使用して再帰的に呼び出される）
+'
+' 備考:
+'   - シートが「姿勢素点修正シート」でなければ再帰処理を停止する。
+'   - 再生ボタンの非表示処理を実行する。
+'------------------------------------------------------------
+Sub RegularInterval1()
+    Dim iend            As Long
+    Dim i               As Long
+    Dim dajsht()        As String
+    Dim currentColumn   As Long
+    Dim ws              As Worksheet
+    Set ws = ActiveSheet
 
-    dajsht() = call_GetSheetNameToArrayspecific(ThisWorkbook, "姿勢評価修正シート")
+    ' 対象となる修正シート一覧を取得
+    dajsht = call_GetSheetNameToArrayspecific(ThisWorkbook, "姿勢素点修正シート")
     iend = UBound(dajsht)
+
+    ' 全シートで再生ボタンを非表示にする
     For i = 1 To iend
         With Worksheets(dajsht(i))
             .Shapes("playBtn").Visible = False
         End With
     Next
 
-    l = ActiveCell.Column
-    If l < TIME_COLUMN_LEFT Then
+    ' カラム位置確認
+    currentColumn = ActiveCell.Column
+    If currentColumn < TIME_COLUMN_LEFT Then
         ActiveSheet.Cells(BOTTOM_OF_TABLE, TIME_COLUMN_LEFT).Select
-        '2秒から始まるように見えるため1秒待機する
+        ' 初期スタートに見せるため1秒待機
         Application.Wait Now() + TimeValue("00:00:01")
     End If
 
-    'activesheetでコピー先にも対応する
-
-    '変数ResTimeに現在の1秒後の時刻を格納
+    ' 次回実行時刻（1秒後）を設定
     ResTime = Now + TimeValue("00:00:01")
 
-    'ApplicationオブジェクトのOnTimeメソッドを使用
-    'EarliestTime : 実行時刻(現時刻から1秒後）
-    'Procedure : 実行プロシージャ名。自分自身を指定して繰り返し処理
-    Application.OnTime EarliestTime:=ResTime, _
-    Procedure:="RegularInterval3"
+    ' 自身を1秒後に再実行する設定
+    Application.OnTime EarliestTime:=ResTime, Procedure:="RegularInterval1"
 
-    '「TestSample1」プロシージャの呼び出し
-    Call nextTimeSelect
-
+    ' シート名確認（姿勢素点修正シートのみ継続）
+    If ActiveSheet.Name Like "姿勢素点修正シート*" Then
+        Call nextTimeSelect
+    Else
+        Call Cancel1
+    End If
 End Sub
 
 
