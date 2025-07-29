@@ -1095,7 +1095,7 @@ Sub checkReliabilityRatio()
     '色を保存する配列
     Dim reliabilityColorDataArray()     As Long
     '色をカウントする配列
-    '信頼性１～３のフレーム数をそれぞれ合計
+    '信頼性1 ~ 3のフレーム数をそれぞれ合計
     '1:測定、2:推定、3:欠損、4:強制、5:除外
     Dim reliabilityColorCounterArray(5) As Long
 
@@ -1103,31 +1103,19 @@ Sub checkReliabilityRatio()
     'RGBを指定するための変数を定義
     '---------------------------------------------
     '信頼性
-    Dim colorMeasureSection    As String '水色
-    Dim colorPredictSection    As String '黄色
-    Dim colorMissingSection    As String 'ピンク
-    Dim colorForcedSection     As String '青色
-    Dim colorRemoveSection     As String 'グレー
-
-    '---------------------------------------------
-    '変数に色をセット
-    '---------------------------------------------
-    '信頼性
-    colorMeasureSection = RGB(0, 176, 240)   '水色
-    colorPredictSection = RGB(252, 246, 0)   '黄色
-    colorMissingSection = RGB(255, 124, 128) 'ピンク
-    colorForcedSection = RGB(0, 51, 204)     '青色
-    colorRemoveSection = RGB(191, 191, 191)  'グレー
+    Dim colorMeasureSection    As Long: colorMeasureSection = RGB(0, 176, 240)  '水色
+    Dim colorPredictSection    As Long: colorPredictSection = RGB(252, 246, 0)  '黄色
+    Dim colorMissingSection    As Long: colorMissingSection = RGB(255, 124, 128)'ピンク
+    Dim colorForcedSection     As Long: colorForcedSection  = RGB(0, 51, 204)   '青色
+    Dim colorRemoveSection     As Long: colorRemoveSection  = RGB(191, 191, 191)'グレー
 
     '---------------------------------------------
     '変数・配列準備
     '---------------------------------------------
-    With ThisWorkbook.Sheets("ポイント計算シート")
-        'フレームレートを取得
-        fps = getFps()
-        '最終行を取得
-        maxRowNum = getLastRow()
-    End With
+    'フレームレートを取得
+    fps = getFps()
+    '最終行を取得
+    maxRowNum = getLastRow()
 
     '姿勢評価修正シート
     Dim sName()  As String
@@ -1141,9 +1129,9 @@ Sub checkReliabilityRatio()
     With ThisWorkbook.Sheets("姿勢評価修正シート")
         ColumnNum = Columns.Count - 6
     End With
+
     '最初の列数(6列まで)分を追加する
     ColumnNum = 16206
-
     maxArrayNum = ColumnNum - 1
 
     '配列を再定義
@@ -1198,7 +1186,6 @@ CONTINUE:
     measurementSectionRatio = reliabilityColorCounterArray(1) / maxRowNum * 100
     '強制
     coercionSectionRatio = reliabilityColorCounterArray(4) / maxRowNum * 100
-
 
     Set actSheet = ActiveSheet
     sName() = call_GetSheetNameToArrayspecific(ThisWorkbook, "姿勢評価修正シート")
