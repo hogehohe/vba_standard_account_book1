@@ -1814,23 +1814,6 @@ Sub resetSheet()
     Next
 End Sub
 
-'非表示の名前の定義を再表示　20230215　早川　シートコピー時に発生するエラー対策
-Public Sub ShowInvisibleNames()
-    Dim oName As Object
-    For Each oName In Names
-        If oName.Visible = False Then
-            oName.Visible = True
-        End If
-    Next
-    MsgBox "非表示の名前の定義を表示しました。", vbOKOnly
-End Sub
-
-
-Private Sub UserForm_Terminate()
-    MsgBox "Excelの画面を表示します"
-    Application.Visible = True
-End Sub
-
 
 ' 選択範囲をデータ有効域とチェックし有効内の値を返す
 ' 戻り値 : True → 交差あり（ leftCol/rightCol が返る ）
