@@ -371,8 +371,8 @@ Sub kobusiage_hantei()
 
     With ThisWorkbook.Sheets("ポイント計算シート")
 
-        '処理する行数を取得（3列目の最終セル）
-        max_row_num = .Cells(1, 3).End(xlDown).row
+        '処理する行数を取得
+        max_row_num = getLastRow()
 
         max_array_num = max_row_num - 1 - 1 '2行目からセルに値が入るため-1、配列は0から使うため-1
 
@@ -392,7 +392,7 @@ Sub kobusiage_hantei()
         '-------------------------------------------------------------------------------------------
         'ここから拳上判定
         '-------------------------------------------------------------------------------------------
-        fps = .Cells(2, 199).Value 'フレームレートを取得
+        fps = getFps() 'フレームレートを取得
 
         '手首と肩の高さを配列に格納
         For i = 0 To max_array_num
@@ -496,8 +496,8 @@ Sub makeGraphJisya()
 
     With ThisWorkbook.Sheets("ポイント計算シート")
 
-        '処理する行数を取得（3列目の最終セル）
-        max_row_num = .Cells(1, 3).End(xlDown).row
+        '処理する行数を取得
+        max_row_num = getLastRow()
 
         'ポイント計算シートの中身を配列に読込
         PointCalcSheetArray = .Range(.Cells(1, 1), .Cells(max_row_num, COLUMN_MAX_NUMBER))
@@ -619,7 +619,7 @@ Function removeCaptionNoise(fps As Double)
     With ThisWorkbook.Sheets("ポイント計算シート")
 
         '処理する行数を取得（3列目の最終セル）
-        max_row_num = .Cells(1, 3).End(xlDown).row
+        max_row_num = getLastRow()
         max_array_num = max_row_num - 1 - 1 '2行目からセルに値が入るため-1、配列は0から使うため-1
 
         '下方向へ探索する際の起点(i), 終点(i_max)
@@ -717,10 +717,10 @@ Sub fixSheetJisya()
     Dim NG_time_B As Double
 
     'フレームレートを取得
-    fps = ThisWorkbook.Sheets("ポイント計算シート").Cells(2, 199)
+    fps = getFps()
 
     'ポイント計算シートの最終行を取得
-    max_row_num = ThisWorkbook.Worksheets("ポイント計算シート").Cells(1, 2).End(xlDown).row
+    max_row_num = getLastRow()
 
     '各種初期化
     removeFrames = 0
@@ -1106,8 +1106,8 @@ Function outputCaption(movieName As String)
         'ファイルを開く
         Open Track2FileName For Output As #2
 
-        '処理する行数を取得（3列目の最終セル）
-        max_row_num = .Cells(1, 3).End(xlDown).row
+        '処理する行数を取得
+        max_row_num = getLastRow()
 
         'ファイル出力
         For i = 2 To max_row_num
@@ -1281,7 +1281,7 @@ Function ClickUpdateDataCore()
     Dim fps          As Double
 
     tstart_click = Timer
-    fps = ThisWorkbook.Sheets("ポイント計算シート").Cells(2, 199)
+    fps = getFps()
 
     'ノイズ除去
     Call removeCaptionNoise(fps)
@@ -1436,7 +1436,7 @@ Sub MacroUpdateData(movieName As String, fps As Double)
         Dim i As Long
 
         '処理する行数を取得（3列目の最終セル）
-        max_row_num = .Cells(1, 3).End(xlDown).row
+        max_row_num = getLastRow()
 
         '★★★本処理は、将来的にPythonコード側で行う予定★★★
         'フラグが入力されるセルに入力されているスペースを検索して消去する
@@ -1590,7 +1590,7 @@ Sub OutputOtrs()
         '(0) 他"
 
     With ThisWorkbook.Sheets("ポイント計算シート")
-        max_row_num = .Cells(1, 3).End(xlDown).row
+        max_row_num = getLastRow()
         targetRowCount = 1
         Dim lastI As Long
 
@@ -1672,8 +1672,8 @@ Sub InputOtrs()
 
             '作業終了時間のコピー、セル背景色は白にする
             If i = 2 Then
-                '処理する行数を取得（3列目の最終セル）
-                max_row = ThisWorkbook.Worksheets("ポイント計算シート").Cells(1, 2).End(xlDown).row
+                '処理する行数を取得
+                max_row = getLastRow()
                 '秒数を切り上げて代入
                 lastTime = Application.WorksheetFunction.RoundUp(ThisWorkbook.Worksheets("ポイント計算シート").Cells(max_row, 2), 0)
 
