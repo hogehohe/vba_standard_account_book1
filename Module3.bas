@@ -1019,18 +1019,27 @@ Sub reliabilityUpdate(row As Long, bit As Long, vle As Long, column_forced_num A
 End Sub
 
 
-'元データ列へ挿入する
-'引数1：データを挿入するセルの行
-'引数2：戻るから呼ばれたら0、それ以外は1
+'------------------------------------------------------------
+' 姿勢スコアの基準値（Base）と全体スコアとの同期処理
+'
+' 引数:
+'   row - 対象となる行番号（ポイント計算シート）
+'   bit - 処理モードフラグ
+'         1：現在の全体スコアを基準値として記録（上書きはしない）
+'         0：基準値を全体スコアに復元（リセット）
+'------------------------------------------------------------
 Sub baseScore(row As Long, bit As Long)
     With ThisWorkbook.Sheets("ポイント計算シート")
-        If bit = 1 Then
+
+        If bit = 1 Then ' 保存（基準スコアを未設定なら記録）
             If .Cells(row, COLUMN_BASE_SCORE).Value = "" Then
                 .Cells(row, COLUMN_BASE_SCORE).Value = .Cells(row, COLUMN_POSTURE_SCORE_ALL).Value
             End If
-        Else
+
+        Else ' 復元（基準スコア → 姿勢スコアに戻す）
             .Cells(row, COLUMN_POSTURE_SCORE_ALL).Value = .Cells(row, COLUMN_BASE_SCORE).Value
         End If
+
     End With
 End Sub
 
