@@ -1212,18 +1212,26 @@ CONTINUE:
 End Sub
 
 
-'拡大ボタン、縮小ボタンが押されたときに実行される処理
-    '引数：expansionFlag As Long　幅の拡大or縮小を決める
-    'False：縮小　True:拡大
-
-    'コードの体裁整えていたら壊れたので初期状態に戻しています230213
+'------------------------------------------------------------
+' 幅調整処理（拡大・縮小）
+'
+' 概要:
+'   ボタン操作に応じて姿勢素点修正シートの列幅を拡大／縮小する。
+'
+' 引数:
+'   expansionFlag - 拡大/縮小のフラグ
+'     True  = 拡大
+'     False = 縮小
+'
+' 備考:
+'   初回呼び出し時に現在の幅サイズを基準として記録する。
+'------------------------------------------------------------
 Sub adjustWidth(expansionFlag As Boolean)
-    Dim columnWidth0 As Double
-    Const EXPANSION_RATIO As Long = 100
-    Static initFin As Boolean
-    Static wSize As widthSize
+    Static initFin          As Boolean      ' 初回呼び出しフラグ
+    Static wSize            As widthSize    ' 現在の幅サイズ
 
     Call stopUpdate
+
     '拡大・縮小どちらのフラグか確認（ボタンから引数受け取る）
     '縮小ボタン
 
@@ -1246,15 +1254,21 @@ Sub adjustWidth(expansionFlag As Boolean)
 
     wSize = sizeNext(wSize, expansionFlag)
 
+    ' シート一覧取得と処理実行
     Dim sName() As String
     Dim n As Long
-    Dim actSheet As Worksheet
+    Dim actSheet    As Worksheet: Set actSheet = ActiveSheet
+
     Set actSheet = ActiveSheet
     sName() = call_GetSheetNameToArrayspecific(ThisWorkbook, "姿勢評価修正シート")
+
     For n = 1 To UBound(sName)
         Call DataAjsSht.SetCellsHW(CInt(wSize), ThisWorkbook.Sheets(sName(n)))
     Next
+
+    ' 元のシートへ戻す
     actSheet.Activate
+
     Call restartUpdate
 End Sub
 
