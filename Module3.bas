@@ -743,19 +743,20 @@ Sub forceResult(postureScorebutton As Long)
     'RGBを指定するための変数を定義
     '---------------------------------------------
     ' 色設定：信頼性
-    Dim colorMeasureSection As Long: colorMeasureSection = RGB(0, 176, 240)
-    Dim colorPredictSection As Long: colorPredictSection = RGB(252, 246, 0)
-    Dim colorMissingSection As Long: colorMissingSection = RGB(255, 124, 128)
-    Dim colorForcedSection  As Long: colorForcedSection  = RGB(0, 51, 204)
-    Dim colorResetSection   As Long: colorResetSection   = RGB(191, 191, 191)
+    Dim colorMeasureSection As Long: colorMeasureSection = RGB(0, 176, 240)     '水色
+    Dim colorPredictSection As Long: colorPredictSection = RGB(252, 246, 0)     '黄色
+    Dim colorMissingSection As Long: colorMissingSection = RGB(255, 124, 128)   'ピンク
+    Dim colorForcedSection  As Long: colorForcedSection  = RGB(0, 51, 204)      '青色
+    Dim colorRemoveSection   As Long: colorRemoveSection = RGB(191, 191, 191)   'グレー
 
     ' 色設定：姿勢点
-    Dim colorResultGreen    As Long: colorResultGreen   = RGB(0, 176, 80)
-    Dim colorResultYellow   As Long: colorResultYellow  = RGB(255, 192, 0)
-    Dim colorResultRed      As Long: colorResultRed     = RGB(192, 0, 0)
-    Dim colorResultGlay     As Long: colorResultGlay    = RGB(191, 191, 191)
-    Dim colorResultWhite    As Long: colorResultWhite   = RGB(255, 255, 255)
-    Dim colorResultOFFGlay  As Long: colorResultOFFGlay = RGB(217, 217, 217)
+    Dim colorResultGreen    As Long: colorResultGreen   = RGB(0, 176, 80)       '緑色
+    Dim colorResultYellow   As Long: colorResultYellow  = RGB(255, 192, 0)      '黄色
+    Dim colorResultRed      As Long: colorResultRed     = RGB(192, 0, 0)        '赤色
+    Dim colorResultGlay     As Long: colorResultGlay    = RGB(191, 191, 191)    'グレー
+    Dim colorResultWhite    As Long: colorResultWhite   = RGB(255, 255, 255)    '白色
+    Dim colorResultBrown    As Long: colorResultBrown   = RGB(64, 0, 0)         '茶色
+    Dim colorResultOFFGlay  As Long: colorResultOFFGlay = RGB(217, 217, 217)    'グレー
 
     ' 現在のシート位置から列オフセットを計算
     Dim shtPage             As Long: shtPage = calcSheetNamePlace(ThisWorkbook.ActiveSheet)
@@ -1815,44 +1816,61 @@ Sub resetSheet()
 End Sub
 
 
-' 選択範囲をデータ有効域とチェックし有効内の値を返す
+' 選択範囲をデータ有効域と交差させる
 ' 戻り値 : True → 交差あり（ leftCol/rightCol が返る ）
 '          False → 交差なし（メッセージは呼び出し側で）
 Public Function CropSelectionToDataArea(ByRef leftCol As Long, ByRef rightCol As Long) As Boolean
     Const PAGE_FRAME_MAX    As Long = LIMIT_COLUMN '16200
-    Dim shtPage             As Long
-    Dim baseClm             As Long
-    Dim selR                As Long '選択列
-    Dim frmR                As Long '選択フレーム
-    Dim pageFrmR            As Long 'ページの有効フレーム
-    Dim totalFrm            As Long
+    Const VALID_ROW_TOP     As Long = 12 '有効範囲の最上部（12）
+    Const VALID_ROW_BOTTOM  As Long = 16 '有効範囲の最下部（16）
 
-    'ボタン列を一緒に選んだら無視
+    Dim shtPage   As Long
+    Dim baseClm   As Long
+    Dim selR      As Long              '選択列の終わり
+    Dim frmR      As Long              '選択フレーム
+    Dim pageFrmR  As Long              'ページの有効フレーム
+    Dim totalFrm  As Long
+    Dim rowTop    As Long              'rowTop: 選択範囲の最初の行番号
+    Dim rowBottom As Long              'rowBottom: 選択範囲の最後の行番号
+
+    ' ボタン列を選んだら無視
     If Selection.Column > Columns.Count Then
         Exit Function
     End If
 
-    selR = Selection.Column + Selection.Columns.Count - 1 '選択列の長さ
+    ' 選択列範囲の終わりを算出
+    selR = Selection.Column + Selection.Columns.Count - 1
 
+    ' 行範囲を取得
+    rowTop = Selection.row
+    rowBottom = Selection.row + Selection.Rows.Count - 1
+
+    ' ↓「選択範囲の上端が14より前 もしくは 下端が23より後ろなら」選択範囲は範囲外
+    ' 行と交差しているかをチェック
+    If rowTop < VALID_ROW_TOP Or rowBottom > VALID_ROW_BOTTOM Then
+        CropSelectionToDataArea = False
+        Exit Function
+    End If
+
+    ' ページ情報の取得
     shtPage = calcSheetNamePlace(ActiveSheet)
     baseClm = LIMIT_COLUMN * shtPage
 
     totalFrm = getLastRow() - 1
 
-    '列 → フレームへ
+    ' フレーム右端
     frmR = selR - COLUMN_ZERO_NUM + baseClm
     pageFrmR = WorksheetFunction.min(baseClm + PAGE_FRAME_MAX, totalFrm)
-    frmR = WorksheetFunction.min(frmR, pageFrmR)    '右辺においてページ内の有効フレーム数を超えないようにする
+    frmR = WorksheetFunction.min(frmR, pageFrmR)
 
-    '姿勢素点修正シートで始まりの列かどうかをチェックし、最低値以下が選択されていた場合はCOLUMN_ZERO+1
+    ' 有効列範囲内に絞る
     leftCol = WorksheetFunction.Max(Selection.Column, COLUMN_ZERO_NUM + 1)
     rightCol = frmR - baseClm + COLUMN_ZERO_NUM
 
     If leftCol > rightCol Then
-        CropSelectionToDataArea = False   '重なりなし
+        CropSelectionToDataArea = False   ' 列で交差していない
     Else
-        'フレーム → 列番号へ戻す
-        CropSelectionToDataArea = True
+        CropSelectionToDataArea = True    ' 行・列とも交差
     End If
 End Function
 
