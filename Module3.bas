@@ -1458,6 +1458,20 @@ Sub RegularInterval1()
 End Sub
 
 
+'------------------------------------------------------------
+' 時刻選択処理
+'
+' 概要:
+'   アクティブセルの次の時間セルへ移動し、
+'   時刻が表示されていなければ次シートへ遷移する。
+'
+' 引数:
+'   なし
+'
+' 備考:
+'   - アクティブセルの行はそのままで、右方向へ時刻を進める。
+'   - 時刻が存在しない場合は終了または次ページへ遷移。
+'------------------------------------------------------------
 '時刻選択処理
 Sub nextTimeSelect()
 
@@ -1465,18 +1479,20 @@ Sub nextTimeSelect()
     '取得した列数の時刻(23行目）をアクティブにする
     Cells(TIME_ROW, Selection.Column).Select
 
-    '一つ右のセルを選択
+    '一つ右のセル（次の時刻）に移動
     ActiveCell.Offset(0, 1).Select
 
-    '1秒分スクロール
+    '表示を1秒分右へスクロール
     ActiveWindow.SmallScroll ToRight:=TIME_WIDTH
 
-    '時刻が表示されていない時は、処理を変更する必要がある
+    ' 選択されたセルが空白なら処理継続 or 終了判定
     If IsEmpty(ActiveCell.Value) Then
         'arrowが見えている時、すなわち次のシートが存在する。
         If getPageShapeState(ActiveSheet, "nextPage") Then
+            '次のページが存在すれば遷移
             Call nextPage_Click
-        Else '終端
+        Else
+            ' 時刻が存在せず、次ページもなければ処理終了
             Call Cancel3
         End If
     End If
