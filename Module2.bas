@@ -183,9 +183,9 @@ Const TRACK2_TATE_3RD_COEF                     As Long = 13 'トラック2用：3段目
 '動画が横の時
 Const TRACK1_YOKO_UPPER_COEF                   As Long = 30 'トラック1用：上段
 Const TRACK1_YOKO_LOWER_COEF                   As Long = 15 'トラック1用：下段
-Const TRACK2_YOKO_1ST_COEF                     As Long = 30 'トラック2用：１段目
-Const TRACK2_YOKO_2ND_COEF                     As Long = 30 'トラック2用：２段目
-Const TRACK2_YOKO_3RD_COEF                     As Long = 18 'トラック2用：３段目
+Const TRACK2_YOKO_1ST_COEF                     As Long = 30 'トラック2用：1段目
+Const TRACK2_YOKO_2ND_COEF                     As Long = 30 'トラック2用：2段目
+Const TRACK2_YOKO_3RD_COEF                     As Long = 18 'トラック2用：3段目
 
 '各種字幕の色
 Const COLOR_DATA_REMOVE_SECTION                As String = "#bfbfbf" 'グレー
@@ -599,7 +599,7 @@ Sub makeGraphZensya()
 
     Dim CaptionName2(10)       As String '姿勢素点1～10の字幕文字列
 
-    Dim work_time              As Double  '作業時間
+    Dim work_time              As Double '作業時間
 
     Dim KoshiAngle             As Double
 
@@ -2140,7 +2140,6 @@ Sub MacroUpdateData(movieName As String, fps As Double)
 
     '姿勢判定
     Call makeGraphJisya
-'    Call makeGraphZensya
 
 
     'ノイズ除去
@@ -2148,7 +2147,6 @@ Sub MacroUpdateData(movieName As String, fps As Double)
 
     '作業分割、時間測定
     Call fixSheetJisya
-'    Call fixSheetZensya
 
 
     '修正シートの更新
@@ -2180,10 +2178,6 @@ Sub MacroSaveData(movieName As String)
 
     '工程評価シートを表示
     ThisWorkbook.Worksheets("工程評価シート").Select
-
-    '工程評価シートの作業名は手入力に変更したためコメントアウト
-    '工程評価シートの作業名を記入する
-    'ThisWorkbook.Worksheets("工程評価シート").Cells(GH_HYOUKA_SHEET_ROW_KOUTEI_NAME, GH_HYOUKA_SHEET_COLUMN_KOUTEI_NAME).Value = cutLeftString(movieName, 16)
 
     '工程評価シートの調査日を記入する
     ThisWorkbook.Worksheets("工程評価シート").Cells(GH_HYOUKA_SHEET_ROW_DATE, GH_HYOUKA_SHEET_COLUMN_KOUTEI_NAME).Value = Date
@@ -2231,7 +2225,7 @@ Sub OutputOtrs()
         .ScreenUpdating = False
         .EnableEvents = False
         .Calculation = xlCalculationManual
-    End With 'With Application
+    End With
     Set ReturnBook = ActiveWorkbook
     destFilePath = ActiveWorkbook.Path & "\" & StrFileName & "_otrs.xlsx"
 
