@@ -1683,57 +1683,62 @@ Private Sub finCellPlace(ws As Worksheet)
 End Sub
 
 
-'段階的にサイズの変更処理をする為の関数
-'引数1：画面の拡大率
-'引数2：サイズを変更できるかどうか
-'戻り値：Small = 1
-'        Medium = 2
-'        Large = 4
-'        LL = 6
-Private Function sizeNext(wSize As widthSize, nextChange As Boolean)
-    Dim tmpsize As widthSize
+'------------------------------------------------------------
+' サイズ切り替えロジック
+'
+' 引数:
+'   wSize       : 現在のサイズ（Small, Medium, Large, LL）
+'   nextChange  : True なら次のサイズへ拡大、False なら縮小
+'
+' 戻り値:
+'   次に設定すべきサイズ（Small = 1, Medium = 2, Large = 4, LL = 6）
+'------------------------------------------------------------
+Private Function sizeNext(wSize As widthSize, nextChange As Boolean) As widthSize
+    Dim tmpSize As widthSize
 
     Select Case wSize
         Case widthSize.Small
             If nextChange Then
-                tmpsize = widthSize.Medium
+                tmpSize = widthSize.Medium
                 Call changeBtnState(REDUCEBTN_NAME, True)
             Else
-                tmpsize = widthSize.Small
+                tmpSize = widthSize.Small
                 Call changeBtnState(EXPANDBTN_NAME, True)
-'                ベースファイルの保存が悪かった時用
+                ' ベースファイルの保存が悪かった時用の保険処理
                 Call changeBtnState(REDUCEBTN_NAME, False)
-
             End If
+
         Case widthSize.Medium
             If nextChange Then
-                tmpsize = widthSize.Large
+                tmpSize = widthSize.Large
             Else
-                tmpsize = widthSize.Small
+                tmpSize = widthSize.Small
                 Call changeBtnState(EXPANDBTN_NAME, True)
                 Call changeBtnState(REDUCEBTN_NAME, False)
             End If
+
         Case widthSize.Large
             If nextChange Then
-                tmpsize = widthSize.LL
+                tmpSize = widthSize.LL
                 Call changeBtnState(EXPANDBTN_NAME, False)
                 Call changeBtnState(REDUCEBTN_NAME, True)
             Else
-                tmpsize = widthSize.Medium
+                tmpSize = widthSize.Medium
             End If
+
         Case widthSize.LL
-            '前にならないとき
             If Not nextChange Then
-                tmpsize = widthSize.Large
+                tmpSize = widthSize.Large
                 Call changeBtnState(EXPANDBTN_NAME, True)
             Else
-                tmpsize = widthSize.LL
+                tmpSize = widthSize.LL
                 Call changeBtnState(REDUCEBTN_NAME, True)
-'                ベースファイルの保存が悪かった時用
+                ' ベースファイルの保存が悪かった時用の保険処理
                 Call changeBtnState(EXPANDBTN_NAME, False)
             End If
     End Select
-    sizeNext = tmpsize
+
+    sizeNext = tmpSize
 End Function
 
 Sub doNothing_btn()
