@@ -1837,9 +1837,7 @@ Public Function CropSelectionToDataArea(ByRef leftCol As Long, ByRef rightCol As
     shtPage = calcSheetNamePlace(ActiveSheet)
     baseClm = LIMIT_COLUMN * shtPage
 
-    With Worksheets("ポイント計算シート")
-        totalFrm = .Cells(1, 3).End(xlDown).row - 1
-    End With
+    totalFrm = getLastRow() - 1
 
     '列 → フレームへ
     frmR = selR - COLUMN_ZERO_NUM + baseClm
