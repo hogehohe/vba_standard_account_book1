@@ -1587,21 +1587,28 @@ Function calcSheetNamePlace(ws As Worksheet)
     calcSheetNamePlace = ret
 End Function
 
-'ブック左から検索
-'引数1：ワークブック
-'引数2：ワークシート名（姿勢評価修正シート）
-'戻り値：姿勢評価修正シートの名前を格納した配列
-Function call_GetSheetNameToArrayspecific(wb As Workbook, str As String)
 
+'------------------------------------------------------------
+' 対象名を含むワークシート名を配列として返す関数
+'
+' 概要:
+'   指定された名前を含むワークシートを左から順に検索し、
+'   一致したシート名を配列として返す。
+'
+' 引数:
+'   wb  : Workbook オブジェクト
+'   str : シート名に含まれる文字列（例: "姿勢素点修正シート"）
+'
+' 戻り値:
+'   一致したワークシート名の配列（String型）
+'------------------------------------------------------------
+Function call_GetSheetNameToArrayspecific(wb As Workbook, str As String) As String()
     Dim tmp()   As String
     Dim ws      As Worksheet
     Dim i       As Long: i = 0
-    Dim istr    As Long
-    Dim scnt    As Long
-    scnt = wb.Worksheets.Count
 
-    For istr = 1 To scnt
-        Set ws = wb.Worksheets(istr)
+    ' 全ワークシートを走査して対象名を含むものを追加
+    For Each ws In wb.Worksheets
         If InStr(ws.Name, str) > 0 Then
             i = i + 1
             ReDim Preserve tmp(1 To i)
