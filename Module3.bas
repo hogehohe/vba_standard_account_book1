@@ -1500,27 +1500,39 @@ Sub nextTimeSelect()
 End Sub
 
 
-'停止ボタン
+'------------------------------------------------------------
+' 停止ボタン処理
+'
+' 概要:
+'   姿勢素点修正シート上で「停止ボタン」が押されたときに、
+'   再生の自動実行を止め、各シートの再生ボタンを再表示する。
+'
+' 備考:
+'   - 再生制御用の ResTime を用いて Application.OnTime を解除。
+'   - 姿勢素点修正シートすべての再生ボタンを再表示。
+'------------------------------------------------------------
 Sub Cancel3()
-    Dim iend, i As Long
+    Dim iend As Long, i As Long
     Dim dajsht() As String
 
-    dajsht() = call_GetSheetNameToArrayspecific(ThisWorkbook, "姿勢評価修正シート")
+    ' 姿勢素点修正シート一覧を取得
+    dajsht = call_GetSheetNameToArrayspecific(ThisWorkbook, "姿勢素点修正シート")
     iend = UBound(dajsht)
 
+    ' 各シートの再生ボタンを再表示
     For i = 1 To iend
         With Worksheets(dajsht(i))
             .Shapes("playBtn").Visible = True
         End With
     Next
 
-'RegularInterval3プロシージャの実行を中断させますので、
-'「Schedule」に「False」を指定します。
+    ' Application.OnTime を使ってタイマーを停止
+    On Error Resume Next
     Application.OnTime EarliestTime:=ResTime, _
-    Procedure:="RegularInterval3", Schedule:=False
-
+                       Procedure:="RegularInterval1", _
+                       Schedule:=False
+    On Error GoTo 0
 End Sub
-
 
 'メッセージボックスの表示
 '戻り値：メッセージボックス
