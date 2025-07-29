@@ -1741,9 +1741,6 @@ Private Function sizeNext(wSize As widthSize, nextChange As Boolean) As widthSiz
     sizeNext = tmpSize
 End Function
 
-Sub doNothing_btn()
-    'なにもしない
-End Sub
 
 '幅調整用のボタンに使う予定。実際名前さえ決めることができればなんとでもなる。
 
