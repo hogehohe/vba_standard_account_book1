@@ -1747,7 +1747,7 @@ End Function
 '引数1：ボタンの名前（EXPANDBTN_NAME or REDUCEBTN_NAME）
 '引数2：ボタンを押せるかどうか
 Private Sub changeBtnState(btnName As String, btnstate As Boolean)
-    Dim iend, i As Long
+    Dim iend, i     As Long
     Dim dajsht() As String
 
     dajsht() = call_GetSheetNameToArrayspecific(ThisWorkbook, "姿勢評価修正シート")
@@ -1759,22 +1759,35 @@ Private Sub changeBtnState(btnName As String, btnstate As Boolean)
     Next
 End Sub
 
-'シートをリセットする
+
+'------------------------------------------------------------
+' シートを初期状態にリセットする処理
+' ・拡大・縮小ボタンを表示
+' ・ページ切替ボタンを非表示
+' ・背景色と罫線をクリア
+' ・一部範囲の内容をクリア
+'------------------------------------------------------------
 Sub resetSheet()
-    Const pPage As String = "prevPage"
-    Const nPage As String = "nextPage"
-    Dim iend, i As Long
-    Dim dajsht() As String
-    dajsht() = call_GetSheetNameToArrayspecific(ThisWorkbook, "姿勢評価修正シート")
+    Const pPage     As String = "prevPage"
+    Const nPage     As String = "nextPage"
+    Dim iend, i     As Long
+    Dim dajsht()    As String
+
+    ' 姿勢評価修正シートの一覧を取得
+    dajsht = call_GetSheetNameToArrayspecific(ThisWorkbook, "姿勢評価修正シート")
     iend = UBound(dajsht)
+
+    ' 各シートに対して初期化処理を実行
     For i = 1 To iend
         With Worksheets(dajsht(i))
-            '全て隠す
+            ' ボタン表示制御
             .Shapes(EXPANDBTN_NAME).Visible = True
             .Shapes(REDUCEBTN_NAME).Visible = True
             .Shapes(pPage).Visible = False
             .Shapes(nPage).Visible = False
         End With
+
+        ' 背景色クリア
         Worksheets(dajsht(i)).Range("G2:G22").Select
         Worksheets(dajsht(i)).Range(Selection, Selection.End(xlToRight)).Select
         With Selection.Interior
@@ -1783,6 +1796,7 @@ Sub resetSheet()
             .PatternTintAndShade = 0
         End With
 
+        ' 罫線クリア
         Worksheets(dajsht(i)).Range("FN2:FN22").Select
         Worksheets(dajsht(i)).Range(Selection, Selection.End(xlToRight)).Select
         Selection.Borders(xlDiagonalDown).LineStyle = xlNone
@@ -1794,12 +1808,11 @@ Sub resetSheet()
         Selection.Borders(xlInsideVertical).LineStyle = xlNone
         Selection.Borders(xlInsideHorizontal).LineStyle = xlNone
 
+        ' データクリア
         Worksheets(dajsht(i)).Range("G22:XFD23").Select
         Selection.ClearContents
     Next
-
 End Sub
-
 
 '非表示の名前の定義を再表示　20230215　早川　シートコピー時に発生するエラー対策
 Public Sub ShowInvisibleNames()
