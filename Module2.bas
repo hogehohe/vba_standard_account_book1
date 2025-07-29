@@ -1,15 +1,14 @@
 Option Explicit '•Ï”‚ÌéŒ¾‚ğ‹­§
 
-
 '======================================================================================
 'ğŒİ’èƒV[ƒg‚ÌŠeƒf[ƒ^‚Ìs”Ô†A—ñ”Ô†‚ğ’è‹` (ŒãŠT—v‚Ì’è”‚à‚±‚±‚Å’è‹`j
 '======================================================================================
-Const KOBUSHIAGE_MISSING_DOWNLIM_TIME           As Double = 1     'i•bj ŒãŒ‡‘¹ƒmƒCƒY”»’è‚Ég‚¤
-Const TEKUBI_SPEED_UPLIM_PREDICT            As Double = 10    'ikm/hjèñzˆÊ’u‚Ì•Ï‰»—ÊãŒÀ@Õ•ÁŒŸ’m‚Ég‚¤
-Const MEAGERE_TIME_MACROUPDATEDATA          As Boolean = True 'True‚Ì‚Æ‚«MacroUpdateData‚Ìˆ—ŠÔ‚ğ‘ª’è‚·‚é
+Const KOBUSHIAGE_MISSING_DOWNLIM_TIME           As Double = 1       'i•bj ŒãŒ‡‘¹ƒmƒCƒY”»’è‚Ég‚¤
+Const TEKUBI_SPEED_UPLIM_PREDICT                As Double = 10      'ikm/hjèñzˆÊ’u‚Ì•Ï‰»—ÊãŒÀ@Õ•ÁŒŸ’m‚Ég‚¤
+Const MEAGERE_TIME_MACROUPDATEDATA              As Boolean = True   'True‚Ì‚Æ‚«MacroUpdateData‚Ìˆ—ŠÔ‚ğ‘ª’è‚·‚é
 Const KOBUSHIAGE_TIME_HOSEI_COEF_WORK           As Double = 5 / 355 'ŒãŠÔ•â³ŒW” ‘ÎÛH’ö‚Ì’†‚ÅÅ‚àì‹ÆŠÔ‚ª’·‚¢H’ö‚Ì@Šm”F•K—v‚ÈŒ‡‘¹‹æŠÔ”/ì‹ÆŠÔ
-Const KOBUSHIAGE_MISSING_DILATION_SIZE          As Double = 0.33   'i•bjŒãŒ‡‘¹‚Ì–c’£ˆ—‚Ég‚¤‘‹‚Ì‘å‚«‚³i•Ğ‘¤j
-Const KOBUSHIAGE_MISSING_EROSION_SIZE           As Double = 0.33   'i•bjŒãŒ‡‘¹‚Ìûkˆ—‚Ég‚¤‘‹‚Ì‘å‚«‚³i•Ğ‘¤j
+Const KOBUSHIAGE_MISSING_DILATION_SIZE          As Double = 0.33    'i•bjŒãŒ‡‘¹‚Ì–c’£ˆ—‚Ég‚¤‘‹‚Ì‘å‚«‚³i•Ğ‘¤j
+Const KOBUSHIAGE_MISSING_EROSION_SIZE           As Double = 0.33    'i•bjŒãŒ‡‘¹‚Ìûkˆ—‚Ég‚¤‘‹‚Ì‘å‚«‚³i•Ğ‘¤j
 Const KOBUSHIAGE_TIME_HOSEI_COEF_MISSING        As Double = 0.2     'ŒãŠÔ•â³ŒW” Šm”F•K—v‚ÈŒ‡‘¹‹æŠÔ”‚PŒÂ‚ ‚½‚è
 
 'makeGraphAoutputCaptionAfixGraphDataAndSheetƒ‚ƒWƒ…[ƒ‹‚Ì’†‚ÉğŒİ’èƒV[ƒg‚ÌƒZƒ‹“à‚©‚ç’l‚ğ“Ç‚İo‚·•”•ª‚ ‚è
@@ -49,14 +48,13 @@ Const COLUMN_DATA_RESULT_FIX                As Long = 208
 Const COLUMN_DATA_RESULT_GREEN              As Long = 209
 Const COLUMN_DATA_RESULT_YELLOW             As Long = 210
 Const COLUMN_DATA_RESULT_RED                As Long = 211
-Const COLUMN_CAPTION_TRACK1                 As Long = 212 'ƒfƒoƒbƒO—pi•’i‚Íg‚í‚È‚¢j
 
 Const COLUMN_DATA_MISSING_SECTION           As Long = 219
 
-Const COLUMN_DATA_KOBUSHIAGE_MEASURE_SECTION_ORG           As Long = 221
-Const COLUMN_DATA_KOBUSHIAGE_MISSING_SECTION_ORG           As Long = 222
-Const COLUMN_KOBUSHIAGE_FORCED_SECTION                     As Long = 223 'ŒãA˜‹È‚°A•G‹È‚°‚Ì‹­§A”»’èƒtƒ‰ƒOAƒtƒ‰ƒO‚Ì‹L‰¯
-Const COLUMN_KOBUSHIAGE_RESULT                             As Long = 245
+Const COLUMN_DATA_KOBUSHIAGE_MEASURE_SECTION_ORG       As Long = 221
+Const COLUMN_DATA_KOBUSHIAGE_MISSING_SECTION_ORG       As Long = 222
+Const COLUMN_KOBUSHIAGE_FORCED_SECTION                 As Long = 223 'ŒãA˜‹È‚°A•G‹È‚°‚Ì‹­§A”»’èƒtƒ‰ƒOAƒtƒ‰ƒO‚Ì‹L‰¯
+Const COLUMN_KOBUSHIAGE_RESULT                         As Long = 245
 Const COLUMN_DATA_KOSHIMAGE_MEASURE_SECTION            As Long = 225
 Const COLUMN_DATA_KOSHIMAGE_PREDICT_SECTION            As Long = 226
 Const COLUMN_DATA_KOSHIMAGE_MISSING_SECTION            As Long = 227
@@ -67,13 +65,12 @@ Const COLUMN_DATA_HIZAMAGE_PREDICT_SECTION             As Long = 231
 Const COLUMN_DATA_HIZAMAGE_MISSING_SECTION             As Long = 232
 Const COLUMN_HIZAMAGE_FORCED_SECTION                   As Long = 233
 Const COLUMN_HIZAMAGE_RESULT                           As Long = 249
-Const COLUMN_CAPTION_TRACK2                            As Long = 235 'ƒfƒoƒbƒO—pi•’i‚Íg‚í‚È‚¢j
 
-Const COLUMN_TEKUBI_RZ_SPEED                           As Long = 237 '‰Eèñ‚yˆÊ’u‚Ì·
-Const COLUMN_TEKUBI_LZ_SPEED                           As Long = 238 '¶èñ‚yˆÊ’u‚Ì·
-Const COLUMN_TEKUBI_Z_SPEED_OVER                       As Long = 239 'èñ‚yˆÊ’u‚Ì· ‚µ‚«‚¢’l’´‚¦ƒtƒ‰ƒO
-Const COLUMN_DATA_KOBUSHIAGE_MEASURE_SECTION_DST           As Long = 240 'Œã‘ª’è‹æŠÔ
-Const COLUMN_DATA_KOBUSHIAGE_MISSING_SECTION_DST           As Long = 241 'ŒãŒ‡‘¹‹æŠÔ
+Const COLUMN_TEKUBI_RZ_SPEED                           As Long = 237 '‰EèñZˆÊ’u‚Ì·
+Const COLUMN_TEKUBI_LZ_SPEED                           As Long = 238 '¶èñZˆÊ’u‚Ì·
+Const COLUMN_TEKUBI_Z_SPEED_OVER                       As Long = 239 'èñZˆÊ’u‚Ì· ‚µ‚«‚¢’l’´‚¦ƒtƒ‰ƒO
+Const COLUMN_DATA_KOBUSHIAGE_MEASURE_SECTION_DST       As Long = 240 'Œã‘ª’è‹æŠÔ
+Const COLUMN_DATA_KOBUSHIAGE_MISSING_SECTION_DST       As Long = 241 'ŒãŒ‡‘¹‹æŠÔ
 Const COLUMN_MEAGERE_TIME_MACROUPDATEDATA              As Long = 242 'MacroUpdateData‚Ìˆ—ŠÔ‚ğ‘ª’èŒ‹‰Ê‚ğŠi”[‚·‚é
 
 Const COLUMN_DATA_RESULT_GH_KOBUSHIAGE      As Long = 245
@@ -84,7 +81,7 @@ Const COLUMN_DATA_RESULT_GH_SONKYO          As Long = 251
 Const COLUMN_GH_HIZA_L                      As Long = 252
 Const COLUMN_GH_HIZA_R                      As Long = 253
 
-Const COLUMN_MAX_NUMBER                                As Long = 256 'Œ»İg—p‚³‚ê‚Ä‚¢‚é—ñ”Ô†‚ÌÅ‘å’l
+Const COLUMN_MAX_NUMBER                     As Long = 256 'Œ»İg—p‚³‚ê‚Ä‚¢‚é—ñ”Ô†‚ÌÅ‘å’l
 
 
 '======================================================================================
@@ -96,7 +93,6 @@ Const SHIJUTEN_SHEET_ROW_EXPAND_NUMBER_CHECK                    As Long = 29
 
 Const SHIJUTEN_SHEET_EXPAND_NUM_CHECK_WORD                      As String = "‚»‚Ì‘¼‚ÌŠÔi’è‰Ò“­ŠÔ7.5H-ƒ°‰„‚×ŠÔj"
 
-
 Const SHIJUTEN_SHEET_COLUMN_WORK_NUMBER                         As Long = 2
 Const SHIJUTEN_SHEET_COLUMN_WORK_NAME                           As Long = 3
 Const SHIJUTEN_SHEET_COLUMN_KOUTEI_NAME                         As Long = 4
@@ -106,16 +102,14 @@ Const SHIJUTEN_SHEET_COLUMN_POSE_START_INDEX                    As Long = 10
 Const SHIJUTEN_SHEET_COLUMN_WORKSTART_TIME                      As Long = 36
 Const SHIJUTEN_SHEET_COLUMN_WORKEND_TIME                        As Long = 38
 
-
 Const SHIJUTEN_SHEET_COLUMN_DATA_MISSING_SECTION                As Long = 46
 Const SHIJUTEN_SHEET_COLUMN_DATA_PREDICT_SECTION                As Long = 47
 
-Const SHIJUTEN_SHEET_COLUMN_KOBUSHIAGE_TIME                         As Long = 49 'ŒãŠÔ
+Const SHIJUTEN_SHEET_COLUMN_KOBUSHIAGE_TIME                     As Long = 49 'ŒãŠÔ
 Const SHIJUTEN_SHEET_COLUMN_KOSHIMAGE_TIME                      As Long = 51 '˜‹È‚°ŠÔ
 Const SHIJUTEN_SHEET_COLUMN_HIZAMAGE_TIME                       As Long = 53 '•G‹È‚°ŠÔ
 
-
-Const SHIJUTEN_SHEET_COLUMN_KOBUSHIAGE_MISSING_TIME                 As Long = 55 'ŒãŒ‡‘¹‹æŠÔ
+Const SHIJUTEN_SHEET_COLUMN_KOBUSHIAGE_MISSING_TIME             As Long = 55 'ŒãŒ‡‘¹‹æŠÔ
 
 Const SHIJUTEN_SHEET_COLUMN_KOSHIMAGE_MISSING_TIME              As Long = 57 '˜‹È‚°Œ‡‘¹‹æŠÔ
 Const SHIJUTEN_SHEET_COLUMN_KOSHIMAGE_PREDICT_TIME              As Long = 58 '˜‹È‚°„’è‹æŠÔ
@@ -145,7 +139,7 @@ Const GH_HYOUKA_SHEET_YOUSO_HANTEI_WORD_OK             As String = "›"
 
 Const GH_HYOUKA_SHEET_COLUMN_WORK_NUMBER               As Long = 2 'ì‹ÆNo.
 Const GH_HYOUKA_SHEET_COLUMN_WORK_NAME                 As Long = 3 '—v‘fì‹Æ–¼
-Const GH_HYOUKA_SHEET_COLUMN_KOUTEI_NAME                 As Long = 4 'H’ö–¼‚Æ’²¸“ú
+Const GH_HYOUKA_SHEET_COLUMN_KOUTEI_NAME               As Long = 4 'H’ö–¼‚Æ’²¸“ú
 Const GH_HYOUKA_SHEET_COLUMN_YOUSO_HANTEI_RESULT       As Long = 12 '—v‘f”»’èŒ‹‰Ê
 Const GH_HYOUKA_SHEET_COLUMN_WORKSTART_TIME            As Long = 13 'ì‹ÆŠJnŠÔ
 Const GH_HYOUKA_SHEET_COLUMN_WORKEND_TIME              As Long = 16 'ì‹ÆI—¹ŠÔ
@@ -160,22 +154,16 @@ Const GH_HYOUKA_SHEET_COLUMN_HANTEI_LIMIT              As Long = 36 '—v‘f”»’è‚µ‚
 Const GH_HYOUKA_SHEET_COLUMN_KOSHI_HANTEI_CAPTION      As Long = 21 '—v‘f”»’è‚µ‚«‚¢’l‚ÌƒLƒƒƒvƒVƒ‡ƒ“‹L“üƒZƒ‹—ñ
 Const GH_HYOUKA_SHEET_COLUMN_HIZA_HANTEI_CAPTION       As Long = 22 '—v‘f”»’è‚µ‚«‚¢’l‚ÌƒLƒƒƒvƒVƒ‡ƒ“‹L“üƒZƒ‹—ñ
 
-
-
 '======================================================================================
 'ŠO”Ì—p@p¨”»’è‚Ì‚µ‚«‚¢’l‚ğ’è‹`
 '======================================================================================
 
-'Const GH_ANGLE_KOSHIMAGE_MIN As Double = 30
 Const GH_ANGLE_KOSHIMAGE_MAX As Double = 180
-'Const GH_ANGLE_HIZAMAGE_MIN  As Double = 60
 Const GH_ANGLE_HIZAMAGE_MAX As Double = 180
 
 '======================================================================================
 'DataAdjustingSheet—p
 '======================================================================================
-'debug
-'Const LIMIT_COLUMN           As Long = 800
 Const LIMIT_COLUMN           As Long = 16200
 
 '======================================================================================
@@ -188,9 +176,9 @@ Const CAPTION_CHUKAN_FILE_NAME_SOEJI           As String = "tmp" '’†ŠÔƒtƒ@ƒCƒ‹‚É
 '“®‰æ‚ªc‚Ì
 Const TRACK1_TATE_UPPER_COEF                   As Long = 22 'ƒgƒ‰ƒbƒN1—pFã’i
 Const TRACK1_TATE_LOWER_COEF                   As Long = 11 'ƒgƒ‰ƒbƒN1—pF‰º’i
-Const TRACK2_TATE_1ST_COEF                     As Long = 22 'ƒgƒ‰ƒbƒN2—pF‚P’i–Ú
-Const TRACK2_TATE_2ND_COEF                     As Long = 22 'ƒgƒ‰ƒbƒN2—pF‚Q’i–Ú
-Const TRACK2_TATE_3RD_COEF                     As Long = 13 'ƒgƒ‰ƒbƒN2—pF‚R’i–Ú
+Const TRACK2_TATE_1ST_COEF                     As Long = 22 'ƒgƒ‰ƒbƒN2—pF1’i–Ú
+Const TRACK2_TATE_2ND_COEF                     As Long = 22 'ƒgƒ‰ƒbƒN2—pF2’i–Ú
+Const TRACK2_TATE_3RD_COEF                     As Long = 13 'ƒgƒ‰ƒbƒN2—pF3’i–Ú
 
 '“®‰æ‚ª‰¡‚Ì
 Const TRACK1_YOKO_UPPER_COEF                   As Long = 30 'ƒgƒ‰ƒbƒN1—pFã’i
@@ -246,24 +234,6 @@ Const DATA_SEPARATION_RED_BOTTOM               As Long = 6
 Const DATA_SEPARATION_RED_TOP                  As Long = 10
 
 
-
-'======================================================================================
-'Sheet1ƒV[ƒg—p
-'======================================================================================
-'Const COLUMN_CYCLE           As Long = 1
-'Const COLUMN_POSE_NUM        As Long = 2
-'Const COLUMN_POSE_NAME       As Long = 3
-'Const COLUMN_TYPE            As Long = 4
-'Const COLUMN_COMPANY_TYPE    As Long = 5
-'Const COLUMN_POSE_START_TIME As Long = 6
-'Const COLUMN_POSE_KEEP_TIME  As Long = 7
-'Const COLUMN_MOVE            As Long = 8
-'Const COLUMN_forced          As Long = 9
-'Const COLUMN_COMPARTINO      As Long = 10
-
-
-
-
 'ˆ—ŠÔ’Zk‚Ì‚½‚ßAXV‚ğƒXƒgƒbƒv
 ' ˆø”1 F‚È‚µ
 ' –ß‚è’lF‚È‚µ
@@ -274,10 +244,6 @@ Function stopUpdate()
 End Function
 
 
-
-
-
-
 'ˆ—ŠÔ’Zk‚Ì‚½‚ßAXV‚ğƒŠƒXƒ^[ƒg
 ' ˆø”1 F‚È‚µ
 ' –ß‚è’lF‚È‚µ
@@ -286,7 +252,6 @@ Function restartUpdate()
     Application.Calculation = xlCalculationAutomatic
     Application.ScreenUpdating = True
 End Function
-
 
 
 '•¶š—ñs‚Ì¶‘¤‚©‚çi•¶š‚ğíœ‚·‚éŠÖ”
@@ -408,7 +373,6 @@ Sub kobusiage_hantei()
 
         'ˆ—‚·‚és”‚ğæ“¾i3—ñ–Ú‚ÌÅIƒZƒ‹j
         max_row_num = .Cells(1, 3).End(xlDown).row
-        'MsgBox ("max_row_num=" & max_row_num)
 
         max_array_num = max_row_num - 1 - 1 '2s–Ú‚©‚çƒZƒ‹‚É’l‚ª“ü‚é‚½‚ß-1A”z—ñ‚Í0‚©‚çg‚¤‚½‚ß-1
 
@@ -440,10 +404,6 @@ Sub kobusiage_hantei()
             kobushiage_missing_array(i, 0) = .Cells(i + 1 + 1, COLUMN_DATA_KOBUSHIAGE_MISSING_SECTION_ORG).Value
         Next
 
-        'ƒfƒoƒbƒN
-'        .Range(.Cells(2, COLUMN_DATA_RESULT_GH_KOBUSHIAGE - 1), .Cells(max_row_num, COLUMN_DATA_RESULT_GH_KOBUSHIAGE - 1)).Value = TekubiPositionLz
-'        .Range(.Cells(2, COLUMN_DATA_RESULT_GH_KOBUSHIAGE), .Cells(max_row_num, COLUMN_DATA_RESULT_GH_KOBUSHIAGE)).Value = TekubiPositionRz
-
         'Œã”»’è‚ğ‚µ‚ÄAŒ‹‰Ê‚ğ”z—ñ‚ÉŠi”[
         For i = 0 To max_array_num
             If _
@@ -457,175 +417,10 @@ Sub kobusiage_hantei()
             End If
         Next
 
-        'ƒfƒoƒbƒN
-'        .Range(.Cells(2, COLUMN_DATA_RESULT_GH_KOBUSHIAGE - 1), .Cells(max_row_num, COLUMN_DATA_RESULT_GH_KOBUSHIAGE - 1)).Value = kobushiage_array
-'        .Range(.Cells(2, COLUMN_DATA_RESULT_GH_KOBUSHIAGE), .Cells(max_row_num, COLUMN_DATA_RESULT_GH_KOBUSHIAGE)).Value = kobushiage_array
-
-
-        'Œã”»’èƒZƒ‹‚Ö”z—ñ‚Ì’l‚ğ‘‚«‚Ş
-'        .Range(.Cells(2, COLUMN_KOBUSHIAGE_RESULT), .Cells(max_row_num, COLUMN_KOBUSHIAGE_RESULT)).Value = kobushiage_arrayfƒfƒoƒbƒN—p
-
-
-'¡¡¡¡¡¡¡¡¡¡¡¡‚±‚±‚©‚çAƒmƒCƒY‚É‚È‚é‚½‚ßƒRƒƒ“ƒgƒAƒEƒg¡¡¡¡¡¡¡¡¡¡¡¡
-'        '-------------------------------------------------------------------------------------------
-'        '‚±‚±‚©‚çèñz•ûŒü‚Ì‘¬“xŒvZ
-'        '-------------------------------------------------------------------------------------------
-'        '‘OƒtƒŒ[ƒ€‚ª–³‚¢‚½‚ß”z—ñ‚Ìæ“ª‚Í0‚ğ“ü‚ê‚é
-'        TekubiSpeedRz(0, 0) = 0
-'        TekubiSpeedLz(0, 0) = 0
-'
-'        'èñZ•ûŒü‚Ì‘¬“x‚ğŒvZ
-'        For i = 1 To max_array_num 'A”z—ñ‚Í0‚©‚çn‚Ü‚é‚ªA‘OƒtƒŒ[ƒ€‚ª–³‚¢‚ÆŒvZo—ˆ‚È‚¢‚½‚ß1‚©‚çŒvZ‚ğn‚ß‚é
-'            'èñ‘¬“x‚ğŒvZ‚µ‚Ä’PˆÊ‚ğ•ÏXimm/sec‚ğkm/hj
-'            TekubiSpeedRz(i, 0) = CDbl(Abs(TekubiPositionRz(i, 0) - TekubiPositionRz(i - 1, 0)) * fps * 60 * 60 / 1000000)
-'            TekubiSpeedLz(i, 0) = CDbl(Abs(TekubiPositionLz(i, 0) - TekubiPositionLz(i - 1, 0)) * fps * 60 * 60 / 1000000)
-'        Next
-'
-'        'èñ‚y•ûŒü‚Ì‘¬“x‚ğ‹L˜^‚·‚é
-''        .Range(.Cells(2, COLUMN_TEKUBI_RZ_SPEED), .Cells(max_row_num, COLUMN_TEKUBI_RZ_SPEED)).Value = TekubiSpeedRz'ƒfƒoƒbƒN—p
-''        .Range(.Cells(2, COLUMN_TEKUBI_LZ_SPEED), .Cells(max_row_num, COLUMN_TEKUBI_LZ_SPEED)).Value = TekubiSpeedLz'ƒfƒoƒbƒN—p
-'
-'        'èñ‚y•ûŒü‚Ì‘¬“xŠî€’l’´‚¦‚Ìƒtƒ‰ƒO¶¬‚µ‚ÄA”z—ñ‚ÉŠi”[
-'        For i = 0 To max_array_num
-'            If TEKUBI_SPEED_UPLIM_PREDICT <= TekubiSpeedRz(i, 0) Or _
-'                TEKUBI_SPEED_UPLIM_PREDICT <= TekubiSpeedLz(i, 0) Then
-'                tekubi_zspeed_over_array(i, 0) = 1
-'            Else
-'                tekubi_zspeed_over_array(i, 0) = 0
-'            End If
-'        Next
-'
-'
-'        '-------------------------------------------------------------------------------------------
-'        '‚±‚±‚©‚çŒãŒ‡‘¹ƒmƒCƒYœ‹ˆ—
-'        '-------------------------------------------------------------------------------------------
-'
-'        '˜A‘±”ƒJƒEƒ“ƒg•Ï”‚ğ’è‹`
-'        kobushiage_missing_limit = CLng(fps * KOBUSHIAGE_MISSING_DOWNLIM_TIME)
-'        kobushiage_missing_count = 0
-'        kobushiage_missing_section_num = 0
-'
-'        'kobushiage_missing_array‚Ì’†‚É1‚ª‚ ‚Á‚½‚ç˜A‘±”‚ğƒJƒEƒ“ƒg‚·‚é
-'        For i = 0 To max_array_num
-'            '”z—ñ‚ª1‚Ì‚Æ‚«
-'            If kobushiage_missing_array(i, 0) > 0 Then
-'                kobushiage_missing_count = kobushiage_missing_count + 1
-'            Else '”z—ñ‚ª0‚Ì‚Æ‚«
-'                'kobushiage_missing_count‚ª¬‚³‚¯‚ê‚ÎƒmƒCƒY‚Æ‚µ‚Äœ‹
-'                If kobushiage_missing_count < kobushiage_missing_limit Then
-'                    For j = (i - kobushiage_missing_count) To i
-'                        kobushiage_missing_array(j, 0) = 0
-'                    Next
-'                End If
-'
-'                'ƒJƒEƒ“ƒgƒŠƒZƒbƒg
-'                kobushiage_missing_count = 0
-'
-'            End If
-'        Next
-'
-'        '”z—ñ‚Ì’l‚ğƒZƒ‹‚É‘ã“ü
-'        '.Range(.Cells(2, 247), .Cells(max_row_num, 247)).Value = kobushiage_missing_array 'ƒfƒoƒbƒN—p
-'
-'
-'        '-------------------------------------------------------------------------------------------
-'        '‚±‚±‚©‚çŒãŒ‡‘¹‹æŠÔC³
-'        '-------------------------------------------------------------------------------------------
-'
-'        '‘¬“xŠî€‰z‚¦‚Ìƒtƒ‰ƒO@‚Æ@ƒmƒCƒYœ‹‚µ‚½ŒãŒ‡‘¹ƒtƒ‰ƒO‚ğ‘«‚µ‡‚í‚¹‚é
-'        For i = 0 To max_array_num
-'             If tekubi_zspeed_over_array(i, 0) > 0 Or kobushiage_missing_array(i, 0) > 0 Then
-'               kobushiage_missing_array(i, 0) = 1
-'            End If
-'        Next
-'
-'        '–c’£Eûkˆ—‚Ì‘‹‚Ì‘å‚«‚³i•Ğ‘¤j‚ğŒˆ‚ß‚é
-'        window_size_dilation = CLng(KOBUSHIAGE_MISSING_DILATION_SIZE * fps)
-'        window_size_erosion = CLng(KOBUSHIAGE_MISSING_EROSION_SIZE * fps)
-'
-''        .Range(.Cells(2, 251), .Cells(max_row_num, 251)).Value = kobushiage_missing_array 'ƒfƒoƒbƒN—p
-'
-'        'ŒŠ–„‚ßˆ—
-'        '–c’£
-'        kobushiage_missing_array() = dilation(kobushiage_missing_array(), max_array_num, window_size_dilation)
-''        .Range(.Cells(2, 252), .Cells(max_row_num, 252)).Value = kobushiage_missing_array 'ƒfƒoƒbƒN—p
-'
-'        'ûk
-'        kobushiage_missing_array() = erosion(kobushiage_missing_array(), max_array_num, window_size_erosion)
-''        .Range(.Cells(2, 253), .Cells(max_row_num, 253)).Value = kobushiage_missing_array 'ƒfƒoƒbƒN—p
-'
-'        'Œã‚°‘ª’èƒtƒ‰ƒO‚Ì¶¬
-'        For i = 0 To max_array_num
-'            If kobushiage_missing_array(i, 0) = 0 Then
-'                kobushiage_measure_array(i, 0) = 1
-'            Else
-'                kobushiage_measure_array(i, 0) = 0
-'            End If
-'        Next
-'
-'        'Œã‘ª’èAŒ‡‘¹ƒZƒ‹‚Ö”z—ñ‚Ì’l‚ğ‘‚«‚Ş
-'        .Range(.Cells(2, COLUMN_DATA_KOBUSHIAGE_MEASURE_SECTION_DST), .Cells(max_row_num, COLUMN_DATA_KOBUSHIAGE_MEASURE_SECTION_DST)).Value = kobushiage_measure_array
-'        .Range(.Cells(2, COLUMN_DATA_KOBUSHIAGE_MISSING_SECTION_DST), .Cells(max_row_num, COLUMN_DATA_KOBUSHIAGE_MISSING_SECTION_DST)).Value = kobushiage_missing_array
-'
-'
-'        '-------------------------------------------------------------------------------------------
-'        '‚±‚±‚©‚çŒãƒtƒ‰ƒOC³
-'        '-------------------------------------------------------------------------------------------
-'
-'        'ƒJƒEƒ“ƒgƒŠƒZƒbƒg
-'        kobushiage_missing_count = 0
-'        kobushiage_missing_section_num = 0
-'
-'        'kobushiage_missing_array“à‚Å1‚Ì˜A‘±”‚ğƒJƒEƒ“ƒg‚·‚é
-'        For i = 0 To max_array_num
-'            '”z—ñ‚ª1‚Ì‚Æ‚«
-'            If kobushiage_missing_array(i, 0) > 0 Then
-'                kobushiage_missing_count = kobushiage_missing_count + 1
-'            Else '”z—ñ‚ª0‚Ì‚Æ‚«
-'                'ŒãŒ‡‘¹‹æŠÔ‚ª‚µ‚«‚¢’l‚æ‚è’·‚¢‚©‚½‚Ü‚è‚Ì”‚ğƒJƒEƒ“ƒg‚·‚é
-'                If kobushiage_missing_count > kobushiage_missing_limit Then
-'                    kobushiage_missing_section_num = kobushiage_missing_section_num + 1
-'                End If
-'
-'                'ƒJƒEƒ“ƒgƒŠƒZƒbƒg
-'                kobushiage_missing_count = 0
-'
-'            End If
-'        Next
-'
-'        'ì‹ÆŠÔ(•b)‚ğŒvZ
-'        work_time = CDbl(max_row_num / fps)
-'
-'        'ŒãŠÔ‚Ì•â³ŠÔ‚ğŒvZ‚·‚éBiì‹ÆŠÔ‚ÆŒ‡‘¹ŠÔ‚Ìè‡’l’´‚¦‰ñ”‚©‚çj
-'        kobushiage_hosei_time = (work_time * KOBUSHIAGE_TIME_HOSEI_COEF_WORK) + (KOBUSHIAGE_TIME_HOSEI_COEF_MISSING * kobushiage_missing_section_num)
-'
-'        'ŒãŒ‡‘¹‹æŠÔ‚ª‚µ‚«‚¢’l‚æ‚è’·‚¢‚©‚½‚Ü‚è‚Ì”‚ğ‘‚«o‚·
-''        ThisWorkbook.Worksheets("p¨d—Ê“_’²¸•[").Cells(2, 51).Value = kobushiage_hosei_time 'ƒfƒoƒbƒN—p
-'
-'        'Œã•â³ŠÔ‚©‚çƒtƒŒ[ƒ€”‚ğŒvZ
-'        kobushiage_hosei_frame_num = WorksheetFunction.RoundUp(kobushiage_hosei_time * fps, 0)
-'
-'
-'        'Œã•â³ŠÔ‚©‚çŒvZ‚µ‚½ƒtƒŒ[ƒ€‚ğ
-'        'èñ‚ÌzˆÊ’u•Ï‰»—Ê‚ª‘å‚«‚¢ƒtƒŒ[ƒ€‚ÌŒãƒtƒ‰ƒO‚É‘O‚©‚ç‡‚ÉŠ„‚è•t‚¯‚Ä‚¢‚­
-'        For i = 0 To max_array_num
-'            'ŒãŠÔ‚ª‘å‚«‚­‚È‚è‚·‚¬‚ğ–h~‚·‚é‚½‚ß‚ÉA0‚É‚È‚Á‚½‚çˆ—‚ğ‚â‚ß‚é
-'            If kobushiage_hosei_frame_num = 0 Then
-'                Exit For
-'            End If
-'
-'            If kobushiage_array(i, 0) = 0 And tekubi_zspeed_over_array(i, 0) = 1 Then
-'                kobushiage_array(i, 0) = 1
-'                'Œã•â³ŠÔ‚©‚çŒvZ‚µ‚½ƒtƒŒ[ƒ€‚ğŒ¸‚ç‚·
-'                kobushiage_hosei_frame_num = kobushiage_hosei_frame_num - 1
-'            End If
-'        Next
-'¡¡¡¡¡¡¡¡¡¡¡¡‚±‚±‚Ü‚ÅAƒmƒCƒY‚É‚È‚é‚½‚ßƒRƒƒ“ƒgƒAƒEƒg¡¡¡¡¡¡¡¡¡¡¡¡
-
         '•â³Œã‚ÌŒãŠÔ”z—ñ‚ğƒZƒ‹‚É“\‚è•t‚¯
         .Range(.Cells(2, COLUMN_DATA_RESULT_GH_KOBUSHIAGE - 1), .Cells(max_row_num, COLUMN_DATA_RESULT_GH_KOBUSHIAGE - 1)).Value = kobushiage_array
         .Range(.Cells(2, COLUMN_DATA_RESULT_GH_KOBUSHIAGE), .Cells(max_row_num, COLUMN_DATA_RESULT_GH_KOBUSHIAGE)).Value = kobushiage_array
-    End With 'With ThisWorkbook.Sheets("ƒ|ƒCƒ“ƒgŒvZƒV[ƒg")
+    End With
 
     '•\¦EXV‚ğƒIƒ“‚É–ß‚·
     Call restartUpdate
@@ -685,10 +480,7 @@ Sub makeGraphJisya()
     Dim j                      As Long
     Dim data_no                As Long
 
-    Dim PointCalcSheetArray As Variant
-
-
-
+    Dim PointCalcSheetArray    As Variant
 
     '”»’è‚Ì‚µ‚«‚¢’l‚ğ‘ã“ü
     AngleKoshiMin = ThisWorkbook.Worksheets("H’ö•]‰¿ƒV[ƒg").Cells(GH_HYOUKA_SHEET_ROW_KOSHI_HANTEI_LIMIT, GH_HYOUKA_SHEET_COLUMN_HANTEI_LIMIT).Value
@@ -706,9 +498,6 @@ Sub makeGraphJisya()
 
         'ˆ—‚·‚és”‚ğæ“¾i3—ñ–Ú‚ÌÅIƒZƒ‹j
         max_row_num = .Cells(1, 3).End(xlDown).row
-
-        'ƒfƒoƒbƒO—p
-        'MsgBox ("max_row_num=" & max_row_num)
 
         'ƒ|ƒCƒ“ƒgŒvZƒV[ƒg‚Ì’†g‚ğ”z—ñ‚É“Ç
         PointCalcSheetArray = .Range(.Cells(1, 1), .Cells(max_row_num, COLUMN_MAX_NUMBER))
@@ -787,7 +576,7 @@ Sub makeGraphJisya()
         .Range(.Cells(2, COLUMN_GH_HIZA_L), .Cells(max_row_num, COLUMN_GH_HIZA_L)).Value = HizaAngleLArray
         .Range(.Cells(2, COLUMN_GH_HIZA_R), .Cells(max_row_num, COLUMN_GH_HIZA_R)).Value = HizaAngleRArray
 
-    End With 'With ThisWorkbook.Sheets("ƒ|ƒCƒ“ƒgŒvZƒV[ƒg")
+    End With
 
     '•\¦EXV‚ğƒIƒ“‚É–ß‚·
     Call restartUpdate
@@ -835,9 +624,9 @@ Sub makeGraphZensya()
     Dim j                      As Long
     Dim data_no                As Long
 
-    Dim CaptionName3Kobushiage      As String 'š–‹ƒgƒ‰ƒbƒN2—p ‚R’i–Ú Œã‚Ìš–‹•¶š—ñ
-    Dim CaptionName3Koshimage       As String 'š–‹ƒgƒ‰ƒbƒN2—p ‚R’i–Ú ˜‹È‚°‚Ìš–‹•¶š—ñ
-    Dim CaptionName3Hizamage        As String 'š–‹ƒgƒ‰ƒbƒN2—p ‚R’i–Ú •G‹È‚°‚Ìš–‹•¶š—ñ
+    Dim CaptionName3Kobushiage As String 'š–‹ƒgƒ‰ƒbƒN2—p 3’i–Ú Œã‚Ìš–‹•¶š—ñ
+    Dim CaptionName3Koshimage  As String 'š–‹ƒgƒ‰ƒbƒN2—p 3’i–Ú ˜‹È‚°‚Ìš–‹•¶š—ñ
+    Dim CaptionName3Hizamage   As String 'š–‹ƒgƒ‰ƒbƒN2—p 3’i–Ú •G‹È‚°‚Ìš–‹•¶š—ñ
     Dim Koshimage              As Double 'š–‹ƒgƒ‰ƒbƒN2—p ˜‹È‚°”»’è—p‚Ìè‡’l
     Dim Hizamage               As Double 'š–‹ƒgƒ‰ƒbƒN2—p •G‹È‚°”»’è—p‚Ìè‡’l
 
@@ -913,18 +702,14 @@ Sub makeGraphZensya()
         CaptionName3Hizamage = .Cells(228, 2)
         Hizamage = .Cells(230, 7)
 
-    End With 'With ThisWorkbook.Worksheets("ğŒİ’èƒV[ƒg")
-
+    End With
 
     With ThisWorkbook.Sheets("ƒ|ƒCƒ“ƒgŒvZƒV[ƒg")
 
         'ˆ—‚·‚és”‚ğæ“¾i3—ñ–Ú‚ÌÅIƒZƒ‹j
         max_row_num = .Cells(1, 3).End(xlDown).row
-        'MsgBox ("max_row_num=" & max_row_num)
 
         max_array_num = max_row_num - 1 - 1 '2s–Ú‚©‚çƒZƒ‹‚É’l‚ª“ü‚é‚½‚ß-1A”z—ñ‚Í0‚©‚çg‚¤‚½‚ß-1
-
-
 
         'p¨”»’è‚µ‚ÄƒZƒ‹‚É‘ã“ü
         For i = 2 To max_row_num
@@ -969,7 +754,7 @@ Sub makeGraphZensya()
                     'p¨•ª—Ş‚ªŒ©‚Â‚©‚Á‚½‚çFor(j)‚ğ”²‚¯‚é
                     Exit For
                 End If
-            Next 'For j = 2 To 10
+            Next
 
             'ŠY“–p¨‚ª‚È‚©‚Á‚½ê‡‚Í1“_‚Ìp¨‚É‚·‚é
             If correctPose = False Then
@@ -980,7 +765,7 @@ Sub makeGraphZensya()
                 '”»’èŒ‹‰Ê‚ğš–‹•WŒv—pƒZƒ‹‚É“ü—Í
                 .Cells(i, COLUMN_DATA_RESULT_FIX).Value = 1
             End If
-        Next ' For i = 2 To max_row_num
+        Next
 
         'ƒOƒ‰ƒt•`‰æ‚ÌF•ª‚¯‚Ì‚½‚ß‚Ìƒtƒ‰ƒO¶¬
         For i = 2 To max_row_num
@@ -1008,17 +793,13 @@ Sub makeGraphZensya()
                 .Cells(i, COLUMN_DATA_RESULT_YELLOW).Value = 0
                 .Cells(i, COLUMN_DATA_RESULT_RED).Value = data_no
             End If
-        Next ' i = 2 To max_row_num
-    End With 'With ThisWorkbook.Sheets("ƒ|ƒCƒ“ƒgŒvZƒV[ƒg")
+        Next
+    End With
 
     '•\¦EXV‚ğƒIƒ“‚É–ß‚·
     Call restartUpdate
 
 End Sub
-
-
-
-
 
 
 'p¨‘f“_‚Ìš–‹Aƒtƒ‰ƒO‚ÌƒmƒCƒY‚ğÁ‹‚·‚é
@@ -1058,7 +839,6 @@ Function removeCaptionNoise(fps As Double)
         'ˆ—‚·‚és”‚ğæ“¾i3—ñ–Ú‚ÌÅIƒZƒ‹j
         max_row_num = .Cells(1, 3).End(xlDown).row
         max_array_num = max_row_num - 1 - 1 '2s–Ú‚©‚çƒZƒ‹‚É’l‚ª“ü‚é‚½‚ß-1A”z—ñ‚Í0‚©‚çg‚¤‚½‚ß-1
-        'MsgBox ("max_row_num=" & max_row_num)
 
         '‰º•ûŒü‚Ö’Tõ‚·‚éÛ‚Ì‹N“_(i), I“_(i_max)
         i_max = max_row_num - noise_num - 1
@@ -1097,13 +877,11 @@ Function removeCaptionNoise(fps As Double)
                 End If
             End If
         Next
-    End With 'With ThisWorkbook.Sheets("ƒ|ƒCƒ“ƒgŒvZƒV[ƒg")
+    End With
 
     '•\¦EXV‚ğƒIƒ“‚É–ß‚·
     Call restartUpdate
 End Function
-
-
 
 
 ' ‚P‰ñ–Ú‚Í•ªŠ„‚È‚µ‚Ìƒf[ƒ^“ü—Í
@@ -1117,40 +895,40 @@ Sub fixSheetJisya()
 
     Dim fps As Double
 
-    Dim separate_work_time        As Double 't‚Æt0‚Ì·‚ğæ“¾‚·‚é
-    Dim t0                        As Double '1‚Â‘O‚Ìt‚ğˆê•Û‘¶‚·‚é
-    Dim t                         As Double 'ì‹ÆŠÔ
+    Dim separate_work_time    As Double 't‚Æt0‚Ì·‚ğæ“¾‚·‚é
+    Dim t0                    As Double '1‚Â‘O‚Ìt‚ğˆê•Û‘¶‚·‚é
+    Dim t                     As Double 'ì‹ÆŠÔ
 
-    Dim i                         As Long
-    Dim j                         As Long
+    Dim i                     As Long
+    Dim j                     As Long
 
-    Dim max_row_num               As Long
+    Dim max_row_num           As Long
 
-    Dim expand_no                 As Long '’Ç‰Á‚³‚ê‚½s”‚ğ’²‚×‚é‚½‚ß‚Ég‚¤
+    Dim expand_no             As Long '’Ç‰Á‚³‚ê‚½s”‚ğ’²‚×‚é‚½‚ß‚Ég‚¤
 
-    Dim Kobushiage_flag           As Long
-    Dim koshimage_flag             As Long
-    Dim hizamage_flag             As Long
+    Dim Kobushiage_flag       As Long
+    Dim koshimage_flag        As Long
+    Dim hizamage_flag         As Long
 
-    Dim start_frame               As Long
-    Dim end_frame                 As Long
+    Dim start_frame           As Long
+    Dim end_frame             As Long
 
-    Dim data_no                   As Long
+    Dim data_no               As Long
 
-    Dim removeFrames              As Long
-    Dim workFrames                As Long
+    Dim removeFrames          As Long
+    Dim workFrames            As Long
 
-    Dim top_jogai_end             As Long
-    Dim bottom_jogai_start        As Long
+    Dim top_jogai_end         As Long
+    Dim bottom_jogai_start    As Long
 
-    Dim worktime_sum              As Double
+    Dim worktime_sum          As Double
 
-    Dim seconds          As Double
-    Dim hours            As String
-    Dim minutes          As String
-    Dim remainingSeconds As String
-    Dim milliseconds     As String
-    Dim format_time      As String
+    Dim seconds             As Double
+    Dim hours               As String
+    Dim minutes             As String
+    Dim remainingSeconds    As String
+    Dim milliseconds        As String
+    Dim format_time         As String
 
     Dim youso_hantei_limit As Double
     Dim NG_time_A As Double
@@ -1220,7 +998,7 @@ Sub fixSheetJisya()
 
                 ThisWorkbook.Sheets("H’ö•]‰¿ƒV[ƒg").Cells(GH_HYOUKA_SHEET_ROW_POSESTART, GH_HYOUKA_SHEET_COLUMN_WORKSTART_TIME).Value = format_time
             End If
-        End With 'With ThisWorkbook.Sheets("ƒ|ƒCƒ“ƒgŒvZƒV[ƒg")
+        End With
 
         '‚±‚±‚©‚çì‹Æ•ªŠ„‚ÉŠÖ‚·‚éˆ—
         For i = 0 To GH_HYOUKA_SHEET_ROW_EXPAND_NUMBER_CHECK - GH_HYOUKA_SHEET_ROW_POSESTART - 1 + expand_no
@@ -1296,7 +1074,7 @@ Sub fixSheetJisya()
             End If
         Next
 
-    End With 'With ThisWorkbook.Sheets("H’ö•]‰¿ƒV[ƒg")
+    End With
 
     'ŠÔ‚ğ‰Šú’l‚Éİ’è
     separate_work_time = 0
@@ -1369,7 +1147,7 @@ Sub fixSheetJisya()
                     'start_frame‚ªend_frame‚æ‚è‘å‚«‚¢ê‡‚ÍAì‹ÆŠÔ‚ğ0‚É‚·‚é
                     ThisWorkbook.Sheets("H’ö•]‰¿ƒV[ƒg").Cells(GH_HYOUKA_SHEET_ROW_POSESTART + i, GH_HYOUKA_SHEET_COLUMN_WORK_TIME).Value = 0
                 End If
-            End With 'With ThisWorkbook.Sheets("ƒ|ƒCƒ“ƒgŒvZƒV[ƒg")
+            End With
 
             '‚±‚±‚©‚çƒJƒEƒ“ƒg‚µ‚½ƒtƒ‰ƒO‚ğŠÔ‚É•ÏŠ·‚µ‚ÄAH’ö•]‰¿ƒV[ƒg‚É“ü—Í
             With ThisWorkbook.Sheets("H’ö•]‰¿ƒV[ƒg")
@@ -1420,7 +1198,7 @@ Sub fixSheetJisya()
                 Else
                     .Cells(GH_HYOUKA_SHEET_ROW_POSESTART + i, GH_HYOUKA_SHEET_COLUMN_YOUSO_HANTEI_RESULT).Value = GH_HYOUKA_SHEET_YOUSO_HANTEI_WORD_OK
                 End If
-            End With 'With ThisWorkbook.Sheets("H’ö•]‰¿ƒV[ƒg")
+            End With
         End If
     Next
 
@@ -1494,15 +1272,12 @@ Sub fixSheetZensya()
     t0 = 0
     t = 0
 
-
-
     'ˆ—‚·‚é’Ç‰Ás”‚ğæ“¾‚·‚é
     '‚»‚Ì‘¼iŠÔŒv7.5Hj‚ÌƒZƒ‹ˆÊ’u‚ÌˆÚ“®—Ê‚ğ’²‚×‚é  ¦Å‘å999s(<979)‚É‚·‚é
     expand_no = 0
     Do While ThisWorkbook.Worksheets("p¨d—Ê“_’²¸•[").Cells(29 + expand_no, 3) <> SHIJUTEN_SHEET_EXPAND_NUM_CHECK_WORD And expand_no < 979
         expand_no = expand_no + 1
     Loop
-    'MsgBox (expand_no)
 
     'p¨d—Ê“_’²¸•[‚É’l‚ğ“ü—Í
     With ThisWorkbook.Sheets("p¨d—Ê“_’²¸•[")
@@ -1556,7 +1331,7 @@ Sub fixSheetZensya()
 
                 ThisWorkbook.Sheets("p¨d—Ê“_’²¸•[").Cells(SHIJUTEN_SHEET_ROW_POSESTART_INDEX, SHIJUTEN_SHEET_COLUMN_WORKSTART_TIME).Value = format_time
             End If
-        End With 'With ThisWorkbook.Sheets("ƒ|ƒCƒ“ƒgŒvZƒV[ƒg")
+        End With
 
         '‚±‚±‚©‚çì‹Æ•ªŠ„‚ÉŠÖ‚·‚éˆ—
         For i = 0 To SHIJUTEN_SHEET_ROW_EXPAND_NUMBER_CHECK - SHIJUTEN_SHEET_ROW_POSESTART_INDEX - 1 + expand_no
@@ -1642,7 +1417,7 @@ Sub fixSheetZensya()
             End If
         Next
 
-    End With 'With ThisWorkbook.Sheets("p¨d—Ê“_’²¸•[")
+    End With
 
     'ì‹ÆNo.‚Ì‘ã“ü
     For i = 0 To 19 + expand_no
@@ -1657,8 +1432,7 @@ Sub fixSheetZensya()
             t0 = t
             t = t + separate_work_time 'ì‹ÆŠÔ‚ğ’Pˆê‚Å“ü—Í‚·‚éê‡
 
-
-        End With 'With ThisWorkbook.Sheets("p¨d—Ê“_’²¸•[")
+        End With
 
         '•b”‚©‚çƒtƒŒ[ƒ€”‚Ö•ÏŠ·
         start_frame = t0 * fps
@@ -1668,9 +1442,6 @@ Sub fixSheetZensya()
         If start_frame > 0 Then
             start_frame = start_frame + 1
         End If
-
-        'ƒfƒoƒbƒO—p
-        'MsgBox ("i=" & i & " / start_frame = " & start_frame & "(" & t0 & ")" & ",  end_frame = " & end_frame & "(" & t & ")")
 
         'p¨—v‘fŠÔ‚ğ“ü‚ê‚é•Ï”‚Ì‰Šú‰»
         For j = 1 To 15
@@ -1760,7 +1531,7 @@ Sub fixSheetZensya()
 
                 Next
             End If
-        End With 'With ThisWorkbook.Sheets("ƒ|ƒCƒ“ƒgŒvZƒV[ƒg")
+        End With
 
         With ThisWorkbook.Sheets("p¨d—Ê“_’²¸•[")
 
@@ -1895,7 +1666,7 @@ Sub fixSheetZensya()
                     .Cells(SHIJUTEN_SHEET_ROW_POSESTART_INDEX + i, SHIJUTEN_SHEET_COLUMN_HIZAMAGE_PREDICT_TIME).Value = separate_hizamage_predict / fps
                 End If
             End If
-        End With 'With ThisWorkbook.Sheets("p¨d—Ê“_’²¸•[")
+        End With
     Next
 
     '•\¦EXV‚ğƒIƒ“‚É–ß‚·
@@ -1921,21 +1692,21 @@ Function outputCaption(movieName As String)
     Dim track1_font_size1           As Long 'š–‹ƒgƒ‰ƒbƒN1—p  ã’i‚ÌƒTƒCƒY
     Dim track1_font_size2           As Long 'š–‹ƒgƒ‰ƒbƒN1—p  ‰º’i‚ÌƒTƒCƒY
 
-    Dim track2_coef_font_size1      As Long 'š–‹ƒgƒ‰ƒbƒN2—p ‚P’i–Ú‚ÌƒTƒCƒY’²®—pŒW”
-    Dim track2_coef_font_size2      As Long 'š–‹ƒgƒ‰ƒbƒN2—p ‚Q’i–Ú‚ÌƒTƒCƒY’²®—pŒW”
-    Dim track2_coef_font_size3      As Long 'š–‹ƒgƒ‰ƒbƒN2—p ‚R’i–Ú‚ÌƒTƒCƒY’²®—pŒW”
-    Dim track2_font_size1           As Long 'š–‹ƒgƒ‰ƒbƒN2—p ‚P’i–Ú‚ÌƒTƒCƒY
-    Dim track2_font_size2           As Long 'š–‹ƒgƒ‰ƒbƒN2—p ‚Q’i–Ú‚ÌƒTƒCƒY
-    Dim track2_font_size3           As Long 'š–‹ƒgƒ‰ƒbƒN2—p ‚R’i–Ú‚ÌƒTƒCƒY
+    Dim track2_coef_font_size1      As Long 'š–‹ƒgƒ‰ƒbƒN2—p 1’i–Ú‚ÌƒTƒCƒY’²®—pŒW”
+    Dim track2_coef_font_size2      As Long 'š–‹ƒgƒ‰ƒbƒN2—p 2’i–Ú‚ÌƒTƒCƒY’²®—pŒW”
+    Dim track2_coef_font_size3      As Long 'š–‹ƒgƒ‰ƒbƒN2—p 3’i–Ú‚ÌƒTƒCƒY’²®—pŒW”
+    Dim track2_font_size1           As Long 'š–‹ƒgƒ‰ƒbƒN2—p 1’i–Ú‚ÌƒTƒCƒY
+    Dim track2_font_size2           As Long 'š–‹ƒgƒ‰ƒbƒN2—p 2’i–Ú‚ÌƒTƒCƒY
+    Dim track2_font_size3           As Long 'š–‹ƒgƒ‰ƒbƒN2—p 3’i–Ú‚ÌƒTƒCƒY
 
     Dim CaptionName0                As String  'š–‹ƒgƒ‰ƒbƒN1—p ã’i¶‘¤ ì‹Æ–¼          ‚Ìš–‹•¶š—ñ
     Dim CaptionName1                As String  'š–‹ƒgƒ‰ƒbƒN1—p ã’i‰E‘¤ ‘ÑƒOƒ‰ƒt‚Ìƒf[ƒ^iM—Š“xj‚Ìš–‹•¶š—ñ
     Dim CaptionName2(10)            As String  'š–‹ƒgƒ‰ƒbƒN1—p ‰º’i •]‰¿œŠO(“Y‚¦š0)+p¨‘f“_1`10(“Y‚¦š1`10)‚Ìš–‹•¶š—ñ
     Dim CaptionNo2                  As Long 'CaptionName2(10)‚ÉƒAƒNƒZƒX‚·‚éÛ‚Ì“Y‚¦šŠi”[—p•Ï”
 
-    Dim CaptionName2Kobushiage      As String 'š–‹ƒgƒ‰ƒbƒN2—p ‚Q’i–Ú Œã‹æŠÔ‚Ìš–‹•¶š—ñ
-    Dim CaptionName2Koshimage       As String 'š–‹ƒgƒ‰ƒbƒN2—p ‚Q’i–Ú ˜‹È‚°ƒf[ƒ^‹æŠÔ‚Ìš–‹•¶š—ñ
-    Dim CaptionName2Hizamage        As String 'š–‹ƒgƒ‰ƒbƒN2—p ‚Q’i–Ú •G‹È‚°ƒf[ƒ^‹æŠÔ‚Ìš–‹•¶š—ñ
+    Dim CaptionName2Kobushiage      As String 'š–‹ƒgƒ‰ƒbƒN2—p 2’i–Ú Œã‹æŠÔ‚Ìš–‹•¶š—ñ
+    Dim CaptionName2Koshimage       As String 'š–‹ƒgƒ‰ƒbƒN2—p 2’i–Ú ˜‹È‚°ƒf[ƒ^‹æŠÔ‚Ìš–‹•¶š—ñ
+    Dim CaptionName2Hizamage        As String 'š–‹ƒgƒ‰ƒbƒN2—p 2’i–Ú •G‹È‚°ƒf[ƒ^‹æŠÔ‚Ìš–‹•¶š—ñ
 
     Dim CaptionName3Kobushiage      As String 'š–‹ƒgƒ‰ƒbƒN2—p ‚R’i–Ú Œã‚Ìš–‹•¶š—ñ
     Dim CaptionName3Koshimage       As String 'š–‹ƒgƒ‰ƒbƒN2—p ‚R’i–Ú ˜‹È‚°‚Ìš–‹•¶š—ñ
@@ -1943,9 +1714,9 @@ Function outputCaption(movieName As String)
 
     Dim ColorName1                  As String 'š–‹ƒgƒ‰ƒbƒN1—p ã’i‰E‘¤iM—Š“x j‚ÌF
     Dim ColorName2                  As String 'š–‹ƒgƒ‰ƒbƒN1—p ‰º’i  ip¨‘f“_j‚ÌF
-    Dim ColorName2Kobushiage        As String 'š–‹ƒgƒ‰ƒbƒN2—p ‚Q’i–Ú iŒã‹æŠÔ j‚ÌF
-    Dim ColorName2Koshimage         As String 'š–‹ƒgƒ‰ƒbƒN2—p ‚Q’i–Ú i˜‹È‚°ƒf[ƒ^‹æŠÔ j‚ÌF
-    Dim ColorName2Hizamage          As String 'š–‹ƒgƒ‰ƒbƒN2—p ‚Q’i–Ú i•G‹È‚°ƒf[ƒ^‹æŠÔ j‚ÌF
+    Dim ColorName2Kobushiage        As String 'š–‹ƒgƒ‰ƒbƒN2—p 2’i–Ú iŒã‹æŠÔ j‚ÌF
+    Dim ColorName2Koshimage         As String 'š–‹ƒgƒ‰ƒbƒN2—p 2’i–Ú i˜‹È‚°ƒf[ƒ^‹æŠÔ j‚ÌF
+    Dim ColorName2Hizamage          As String 'š–‹ƒgƒ‰ƒbƒN2—p 2’i–Ú i•G‹È‚°ƒf[ƒ^‹æŠÔ j‚ÌF
     Dim ColorName3Kobushiage        As String 'š–‹ƒgƒ‰ƒbƒN2—p ‚R’i–Ú iŒã j‚ÌF
     Dim ColorName3Koshimage         As String 'š–‹ƒgƒ‰ƒbƒN2—p ‚R’i–Ú i˜‹È‚° j‚ÌF
     Dim ColorName3Hizamage          As String 'š–‹ƒgƒ‰ƒbƒN2—p ‚R’i–Ú i•G‹È‚° j‚ÌF
@@ -1973,16 +1744,16 @@ Function outputCaption(movieName As String)
     If video_width < video_height Then
         track1_coef_font_size1 = TRACK1_TATE_UPPER_COEF  '“®‰æ‚ªc‚Ì‚Æ‚«‚Ìƒgƒ‰ƒbƒN1—pFã’i
         track1_coef_font_size2 = TRACK1_TATE_LOWER_COEF
-        track2_coef_font_size1 = TRACK2_TATE_1ST_COEF    'ƒgƒ‰ƒbƒN2—pF‚P’i–Ú
-        track2_coef_font_size2 = TRACK2_TATE_2ND_COEF    'ƒgƒ‰ƒbƒN2—pF‚Q’i–Ú
-        track2_coef_font_size3 = TRACK2_TATE_3RD_COEF    'ƒgƒ‰ƒbƒN2—pF‚R’i–Ú
+        track2_coef_font_size1 = TRACK2_TATE_1ST_COEF    'ƒgƒ‰ƒbƒN2—pF1’i–Ú
+        track2_coef_font_size2 = TRACK2_TATE_2ND_COEF    'ƒgƒ‰ƒbƒN2—pF2’i–Ú
+        track2_coef_font_size3 = TRACK2_TATE_3RD_COEF    'ƒgƒ‰ƒbƒN2—pF3’i–Ú
     '“®‰æ‚ª‰¡‚Ì
     Else
         track1_coef_font_size1 = TRACK1_YOKO_UPPER_COEF  '“®‰æ‚ªc‚Ì‚Æ‚«‚Ìƒgƒ‰ƒbƒN1—pFã’i
         track1_coef_font_size2 = TRACK1_YOKO_LOWER_COEF
-        track2_coef_font_size1 = TRACK2_YOKO_1ST_COEF    'ƒgƒ‰ƒbƒN2—pF‚P’i–Ú
-        track2_coef_font_size2 = TRACK2_YOKO_2ND_COEF    'ƒgƒ‰ƒbƒN2—pF‚Q’i–Ú
-        track2_coef_font_size3 = TRACK2_YOKO_3RD_COEF    'ƒgƒ‰ƒbƒN2—pF‚R’i–Ú
+        track2_coef_font_size1 = TRACK2_YOKO_1ST_COEF    'ƒgƒ‰ƒbƒN2—pF1’i–Ú
+        track2_coef_font_size2 = TRACK2_YOKO_2ND_COEF    'ƒgƒ‰ƒbƒN2—pF2’i–Ú
+        track2_coef_font_size3 = TRACK2_YOKO_3RD_COEF    'ƒgƒ‰ƒbƒN2—pF3’i–Ú
     End If
 
     'ƒtƒHƒ“ƒgƒTƒCƒY‚ğİ’è
@@ -2013,23 +1784,11 @@ Function outputCaption(movieName As String)
     '•]‰¿œŠO—p
     CaptionName2(0) = "0-p¨•]‰¿‚È‚µ" '‰º’i‚ÌƒLƒƒƒvƒVƒ‡ƒ“–¼‚ğ•\¦‚µ‚È‚¢
 
-    'Šeƒtƒ@ƒCƒ‹–¼‚ğİ’è
-'    'š–‹ƒgƒ‰ƒbƒN“ü‚ê‘Ö‚¦‚Ä¤‚»‚Ì‘¼š–‹‚ªƒgƒ‰ƒbƒN1‚É‚È‚é
-'    If ThisWorkbook.Worksheets("p¨d—Ê“_’²¸•[").CheckBox1 = True Then
-'        Track1FileName = ActiveWorkbook.Path & "\" & movieName & CAPTION_TRACK2_FILE_NAME_SOEJI & ".srt"
-'        Track2FileName = ActiveWorkbook.Path & "\" & movieName & ".srt"
-'    '’Êíˆ— p¨‘f“_š–‹‚ªƒgƒ‰ƒbƒN1‚É‚È‚é
-'    Else
-'        Track1FileName = ActiveWorkbook.Path & "\" & movieName & ".srt"
-'        Track2FileName = ActiveWorkbook.Path & "\" & movieName & CAPTION_TRACK2_FILE_NAME_SOEJI & ".srt"
-'    End If
     Track2FileName = ActiveWorkbook.Path & "\" & movieName & ".srt"
-
 
     With ThisWorkbook.Sheets("ƒ|ƒCƒ“ƒgŒvZƒV[ƒg")
 
         'ƒtƒ@ƒCƒ‹‚ğŠJ‚­
-        'Open Track1FileName For Output As #2
         Open Track2FileName For Output As #2
 
         'ˆ—‚·‚és”‚ğæ“¾i3—ñ–Ú‚ÌÅIƒZƒ‹j
@@ -2044,85 +1803,6 @@ Function outputCaption(movieName As String)
             'ŠJ”­ŠÂ‹«‚ÌƒVƒXƒeƒ€‚Í•¡”š–‹d—l‚Ì‚½‚ßAƒGƒ‰[–h~‚Ì‚½‚ßAb’è‚Åš–‹‚Q‚Í‹ó‚Ìƒtƒ@ƒCƒ‹‚ğì¬‚·‚é
             '©Ô—p‚ÌƒVƒXƒeƒ€‚ğì¬‚·‚éÛ‚É‚Íš–‹ƒtƒ@ƒCƒ‹‚ğ‚P‚Â‚É‚·‚é
 
-'            '////////////////////////////////////////
-'            '// š–‹ƒgƒ‰ƒbƒN1—p‚Ìˆ— ‚±‚±‚©‚ç
-'            '//
-'
-'            'ƒf[ƒ^‹æŠÔ‚Ì•`‰æFAƒLƒƒƒvƒVƒ‡ƒ“–¼‚ğİ’è‚·‚é
-'            '¦‚Í‚¶‚ß‚É•]‰¿œŠOAƒf[ƒ^‹­§‹æŠÔAƒf[ƒ^•s—Ç‹æŠÔ‚Ì‡‚É”»’è‚·‚éid•¡ƒrƒbƒgONAš–‹•\¦‚Ì—Dæ“x‚ª‚‚¢‡j
-'            ' ¡‚Ì‚Æ‚±‚ëÅŒã‚ÌfillData‚Å‘ª’èƒrƒbƒg‚Í“¯‚É—§‚Âd—lB
-'            If .Cells(i, COLUMN_DATA_REMOVE_SECTION).Value > 0 Then
-'                CaptionName1 = CAPTION_DATA_REMOVE_SECTION
-'                ColorName1 = COLOR_DATA_REMOVE_SECTION
-'            ElseIf .Cells(i, COLUMN_DATA_FORCED_SECTION).Value > 0 Then
-'                CaptionName1 = CAPTION_DATA_FORCED_SECTION
-'                ColorName1 = COLOR_DATA_FORCED_SECTION
-'            ElseIf .Cells(i, COLUMN_DATA_MISSING_SECTION).Value > 0 Then
-'                CaptionName1 = CAPTION_DATA_MISSING_SECTION
-'                ColorName1 = COLOR_DATA_MISSING_SECTION
-'            ElseIf .Cells(i, COLUMN_DATA_MEASURE_SECTION).Value > 0 Then
-'                CaptionName1 = CAPTION_DATA_MEASURE_SECTION
-'                ColorName1 = COLOR_DATA_MEASURE_SECTION
-'            ElseIf .Cells(i, COLUMN_DATA_PREDICT_SECTION).Value > 0 Then
-'                CaptionName1 = CAPTION_DATA_PREDICT_SECTION
-'                ColorName1 = COLOR_DATA_PREDICT_SECTION
-'            End If
-'
-'            'p¨‘f“_‚Ì•`‰æFAƒLƒƒƒvƒVƒ‡ƒ“–¼‚ğİ’è‚·‚é
-'            If .Cells(i, COLUMN_DATA_REMOVE_SECTION).Value > 0 Then
-'                '•]‰¿œŠO‚Ì‚Æ‚«
-'                CaptionNo2 = 0
-'                ColorName2 = COLOR_DATA_REMOVE_SECTION
-'            Else
-'                '’Êí
-'                CaptionNo2 = .Cells(i, COLUMN_DATA_RESULT_ORIGIN).Value
-'                If .Cells(i, COLUMN_DATA_RESULT_GREEN).Value > 0 Then
-'                    ColorName2 = COLOR_DATA_RESULT_GREEN
-'                ElseIf .Cells(i, COLUMN_DATA_RESULT_YELLOW).Value > 0 Then
-'                    ColorName2 = COLOR_DATA_RESULT_YELLOW
-'                ElseIf .Cells(i, COLUMN_DATA_RESULT_RED).Value > 0 Then
-'                    ColorName2 = COLOR_DATA_RESULT_RED
-'                End If
-'            End If
-'
-'            'š–‹•¶š—ñ‚ğ¶¬
-'            Track1OutputString1 = _
-'                "<font size=""" & track1_font_size1 & """ color =" & "#ffffff" & ">" & CaptionName0 & "</font>" & _
-'                "<font size=""" & track1_font_size1 & """ color =" & ColorName1 & ">" & CaptionName1 & "</font>"
-'            Track1OutputString2 = _
-'                "<font size=""" & track1_font_size2 & """ color =" & ColorName2 & ">" & CaptionName2(CaptionNo2) & _
-'                "</font>"
-'
-'            'š–‹•¶š—ñ‚ğƒ|ƒCƒ“ƒgŒvZƒV[ƒg‚Éo—Í
-'            'ƒfƒoƒbƒO—pi•’i‚Íg‚í‚È‚¢j
-'            '.Cells(i, COLUMN_CAPTION_TRACK1).Value = Track1OutputString1 & Track1OutputString2
-'
-'            'š–‹•¶š—ñ‚ğƒeƒLƒXƒgƒtƒ@ƒCƒ‹‚É‘‚«o‚µ‚·‚é
-'            Print #1, " " & i - 1 '”š‚Ì—¼‘¤‚É”¼ŠpƒXƒy[ƒX‚ğ“ü‚ê‚éBš–‹ƒgƒ‰ƒbƒN2‚Æ‹æ•Ê‚·‚é‚½‚ß
-'            Print #1, .Cells(i, COLUMN_ROUGH_TIME).Value&; " --> " & .Cells(i + 1, COLUMN_ROUGH_TIME).Value '‚ğo—Í
-'
-'            Print #1, Replace(Track1OutputString1, vbLf, vbCrLf) '‰üsƒR[ƒh‚ğ’u‚«Š·‚¦AƒLƒƒƒvƒVƒ‡ƒ“o—Í
-'            Print #1, Replace(Track1OutputString2, vbLf, vbCrLf) '‰üsƒR[ƒh‚ğ’u‚«Š·‚¦AƒLƒƒƒvƒVƒ‡ƒ“o—Í
-'
-'            Print #1, ""
-'            Print #1, ""
-'
-'            '//
-'            '// š–‹ƒgƒ‰ƒbƒN1—p‚Ìˆ— ‚±‚±‚Ü‚Å
-'            '////////////////////////////////////////
-
-
-
-            '////////////////////////////////////////
-            '// š–‹ƒgƒ‰ƒbƒN2—p‚Ìˆ— ‚±‚±‚©‚ç
-            '//
-
-            'ƒf[ƒ^‹æŠÔ‚Ì•`‰æFAƒLƒƒƒvƒVƒ‡ƒ“–¼‚ğİ’è‚·‚é
-            '¦‚Í‚¶‚ß‚É•]‰¿œŠOAƒf[ƒ^‹­§‹æŠÔAƒf[ƒ^•s—Ç‹æŠÔ‚Ì‡‚É”»’è‚·‚éid•¡ƒrƒbƒgONAš–‹•\¦‚Ì—Dæ“x‚ª‚‚¢‡j
-            ' ¡‚Ì‚Æ‚±‚ëÅŒã‚ÌfillData‚Å‘ª’èƒrƒbƒg‚Í“¯‚É—§‚Âd—lB
-
-           '1’i–Ú‚Ì•`‰æFAƒLƒƒƒvƒVƒ‡ƒ“–¼‚Íš–‹ƒgƒ‰ƒbƒN1—pã’i—p‚Ìì‹ÆNo.‚Æì‹Æ–¼‚ğ—¬—p‚·‚é‚½‚ßA‚±‚±‚Å‚Íˆ—‚È‚µ
-           '2’i–Ú‚Ì•`‰æFAƒLƒƒƒvƒVƒ‡ƒ“–¼‚ğİ’è‚·‚éiƒf[ƒ^‚ÌM—Š«j
             '‚±‚±‚©‚çŒã
             'œŠO
             If .Cells(i, COLUMN_DATA_REMOVE_SECTION).Value > 0 Then
@@ -2188,9 +1868,7 @@ Function outputCaption(movieName As String)
                 ColorName2Hizamage = COLOR_DATA_PREDICT_SECTION
             End If
 
-
-
-            '‚R’i–Ú‚Ì•`‰æFAƒLƒƒƒvƒVƒ‡ƒ“–¼‚ğİ’è‚·‚é
+            '3’i–Ú‚Ì•`‰æFAƒLƒƒƒvƒVƒ‡ƒ“–¼‚ğİ’è‚·‚é
             'Œã
             If .Cells(i, COLUMN_KOBUSHIAGE_RESULT).Value > 0 Then
                 CaptionName3Kobushiage = "<b>" & CAPTION_A_RESULT_NAME1 & "</b>"
@@ -2328,12 +2006,10 @@ Sub ClickJisyaLimitChangeUpdateData()
         Dim dotPoint     As String
         Dim workbookName As String
 
-
         tstart_click = Timer
 
         dotPoint = InStrRev(ActiveWorkbook.Name, ".")
         workbookName = Left(ActiveWorkbook.Name, dotPoint - 1)
-
 
         'p¨”»’è
         Call makeGraphJisya
@@ -2350,8 +2026,6 @@ Sub ClickJisyaLimitChangeUpdateData()
         ' ƒLƒƒƒ“ƒZƒ‹ƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½ê‡A‰½‚à‚µ‚È‚¢
     End If
 End Sub
-
-
 
 
 ' ŠT—v : ŠÖßŠp“xA3dƒf[ƒ^‚Ìcsv‚ğƒRƒs[“\‚è•t‚¯‚·‚é
@@ -2395,14 +2069,13 @@ Sub MacroInput3dData(fps As Double, video_width As Long, csv_file_name As String
 
         '•Û‘¶‚¹‚¸I—¹
         .Close False
-    End With 'With wb
+    End With
 
     ' A ‚©‚ç C ‚ÌŠÔ‚ğ•\‚·ƒZƒ‹‚ğÀ‘Ì‰»‚³‚¹‚é
     ' angle.csv‚ğ’£‚è•t‚¯‚½‚ ‚Æ‚ÌÅ‰ºs”Ô†‚ğæ“¾‚·‚é
     MaxRow = Range("D2").End(xlDown).row
     For i = 0 To MaxRow - 2
         Range("A" & i + 2).Value = i
-        'Range("B" & i + 2).Value = (8 * 60 + 42) * i / 15686
         Range("B" & i + 2).Value = i * (1 / fps)
         Range("C" & i + 2).FormulaR1C1 = "=LEFT(TEXT(RC[-1]/(24*60*60), ""hh:mm:ss.000""), 8)"
     Next
@@ -2420,8 +2093,9 @@ Sub MacroInput3dData(fps As Double, video_width As Long, csv_file_name As String
         .ScreenUpdating = True
         .EnableEvents = True
         .Calculation = xlCalculationAutomatic
-    End With 'With Application
+    End With
 End Sub
+
 
 ' ˆø”1 F‚È‚µ
 ' ˆø”2 F‚È‚µ
@@ -2430,7 +2104,6 @@ Sub VeryHiddenSheet()
     Sheets("ƒ|ƒCƒ“ƒgŒvZƒV[ƒg").Visible = xlVeryHidden
     Sheets("ğŒİ’èƒV[ƒg").Visible = xlVeryHidden
 End Sub
-
 
 
 'Python‚©‚çŒÄ‚Ño‚µ‚³‚ê‚é
@@ -2463,7 +2136,7 @@ Sub MacroUpdateData(movieName As String, fps As Double)
         'fps’l‚Ì•Û‘¶
         fps = .Cells(2, 199)
 
-    End With 'With ThisWorkbook.Sheets("ƒ|ƒCƒ“ƒgŒvZƒV[ƒg")
+    End With
 
     'p¨”»’è
     Call makeGraphJisya
@@ -2519,8 +2192,6 @@ Sub MacroSaveData(movieName As String)
     Sheets("H’ö•]‰¿ƒV[ƒg").Activate
     ThisWorkbook.Save
 
-
-
 End Sub
 
 
@@ -2553,9 +2224,8 @@ Sub OutputOtrs()
         StrFileName = Left(StrFileName, PosExt - 1)
     End If
 
-
-  'NowŠÖ”‚Åæ“¾‚µ‚½Œ»İ“ú•t‚ğFormat‚Å®Œ`‚µ‚Ä•Ï”‚ÉŠi”[
-  strYYYYMMDD = Format(Now, "yyyymmdd_HHMMSS_")
+    'NowŠÖ”‚Åæ“¾‚µ‚½Œ»İ“ú•t‚ğFormat‚Å®Œ`‚µ‚Ä•Ï”‚ÉŠi”[
+    strYYYYMMDD = Format(Now, "yyyymmdd_HHMMSS_")
 
     With Application
         .ScreenUpdating = False
@@ -2580,19 +2250,6 @@ Sub OutputOtrs()
     Else
         Set targetWorkbook = Workbooks.Open(destFilePath)
     End If
-'    targetRowCount = 1
-'    targetWorkbook.Worksheets("Sheet1").Cells(targetRowCount, COLUMN_CYCLE).Value = "ƒTƒCƒNƒ‹"
-'    targetWorkbook.Worksheets("Sheet1").Cells(targetRowCount, COLUMN_POSE_NUM).Value = "No."
-'    targetWorkbook.Worksheets("Sheet1").Cells(targetRowCount, COLUMN_POSE_NAME).Value = "—v‘f–¼"
-'    targetWorkbook.Worksheets("Sheet1").Cells(targetRowCount, COLUMN_TYPE).Value = "í•Ê1"
-'    targetWorkbook.Worksheets("Sheet1").Cells(targetRowCount, COLUMN_COMPANY_TYPE).Value = "‘g‡‹Æí•Ê"
-'    targetWorkbook.Worksheets("Sheet1").Cells(targetRowCount, COLUMN_POSE_START_TIME).Value = "ƒXƒ^[ƒg"
-'    targetWorkbook.Worksheets("Sheet1").Cells(targetRowCount, COLUMN_POSE_KEEP_TIME).Value = "—v‘fŠÔ"
-'    targetWorkbook.Worksheets("Sheet1").Cells(targetRowCount, COLUMN_MOVE).Value = "“®ì"
-'    targetWorkbook.Worksheets("Sheet1").Cells(targetRowCount, COLUMN_forced).Value = "–³Œø"
-'    targetWorkbook.Worksheets("Sheet1").Cells(targetRowCount, COLUMN_COMPARTINO).Value = "”äŠr’l"
-'    targetWorkbook.Worksheets("Sheet1").Cells(targetRowCount, COLUMN_POSE_NAME).Value = "—v‘f–¼"
-'    targetWorkbook.Worksheets("Sheet1").Cells(targetRowCount, COLUMN_POSE_KEEP_TIME).Value = "—v‘fŠÔ"
 
     ReturnBook.Activate
     lastPoseNum = -1
@@ -2611,16 +2268,7 @@ Sub OutputOtrs()
         CaptionName2(3) = .Cells(132, 2)
         CaptionName2(2) = .Cells(150, 2)
         CaptionName2(1) = .Cells(168, 2)
-    End With 'With ThisWorkbook.Worksheets("ğŒİ’èƒV[ƒg")
-
-
-'    For i = 2 To 10
-'        posExt = InStrRev(CaptionName2(i), "-")
-'        If (0 < posExt) Then
-'            CaptionName2(i) = Mid(CaptionName2(i), posExt + 1, Len(CaptionName2(i)))
-'        End If
-'    Next
-
+    End With
 
     CaptionName2(0) = "ƒf[ƒ^‚È‚µ"
         'ˆÈ‰º‚Ìƒpƒ^[ƒ“ˆÈŠO‚Í‚»‚Ì‘¼‚Æ‚·‚éB
@@ -2644,29 +2292,20 @@ Sub OutputOtrs()
             writePoseNum = 0
             On Error Resume Next
             writePoseNum = .Cells(i, COLUMN_DATA_RESULT_ORIGIN).Value 'ƒLƒƒƒvƒVƒ‡ƒ“”Ô†‚ÌƒZƒ‹‘ã“ü
-'            If writePoseNum = 3 Or _
-'                writePoseNum = 5 Then
-'                'ƒ|[ƒY3‚Æ5‚Í‚»‚Ì‘¼‚É‚·‚éB
-'                writePoseNum = 0
-'            End If
+
             'Å‰‚É•Ê‚Ìƒ|[ƒY‚É•Ï‚í‚Á‚½‚ª—~‚µ‚¢‚Ì‚Åˆê‰ñ–Ú‚Í“¯ˆê‚É‚·‚éB
             If i = 2 Then
                 lastPoseNum = writePoseNum
                 lastI = i - 2
             End If
 
-
             If lastPoseNum <> writePoseNum Then
                 '“¯ˆêƒ|[ƒY‚ğæ‚Á‚Ä‚¢‚½ŠÔ‚ª•K—viØ‚è‘Ö‚í‚Á‚½ˆêŒÂ‘O‚ÌŠÔj
                 currentTime = .Cells(i - 1, 2).Value
                 '‘‚«‚İˆ—
                 targetWorkbook.Activate
-                'targetWorkbook.Worksheets("Sheet1").Cells(targetRowCount, COLUMN_POSE_NUM).Value = lastPoseNum
                 targetWorkbook.Worksheets("Sheet1").Cells(targetRowCount, COLUMN_POSE_NAME).Value = CaptionName2(lastPoseNum)
-                'targetWorkbook.Worksheets("Sheet1").Cells(targetRowCount, COLUMN_POSE_START_TIME).Value = Round(lastTime, 5)
                 targetWorkbook.Worksheets("Sheet1").Cells(targetRowCount, COLUMN_POSE_KEEP_TIME).Value = Round(currentTime - lastTime, 5)
-                'targetWorkbook.Worksheets("Sheet1").Cells(targetRowCount, 9).Value = lastI
-                'targetWorkbook.Worksheets("Sheet1").Cells(targetRowCount, 10).Value = i - 3
                 lastI = i - 2
                 targetRowCount = targetRowCount + 1
 
@@ -2682,21 +2321,15 @@ Sub OutputOtrs()
             currentTime = .Cells(i - 1, 2).Value
             '‘‚«‚İˆ—
             targetWorkbook.Activate
-            'targetWorkbook.Worksheets("Sheet1").Cells(targetRowCount, COLUMN_POSE_NUM).Value = writePoseNum
             targetWorkbook.Worksheets("Sheet1").Cells(targetRowCount, COLUMN_POSE_NAME).Value = CaptionName2(writePoseNum)
-            'targetWorkbook.Worksheets("Sheet1").Cells(targetRowCount, COLUMN_POSE_START_TIME).Value = Round(lastTime, 5)
             targetWorkbook.Worksheets("Sheet1").Cells(targetRowCount, COLUMN_POSE_KEEP_TIME).Value = Round(currentTime - lastTime, 5)
-
-            'targetWorkbook.Worksheets("Sheet1").Cells(targetRowCount, 9).Value = lastI
-            'targetWorkbook.Worksheets("Sheet1").Cells(targetRowCount, 10).Value = i - 1 - 3
             ReturnBook.Activate
         End If
-    End With 'With ThisWorkbook.Sheets("ƒ|ƒCƒ“ƒgŒvZƒV[ƒg")
+    End With
     Sheet4.Activate
     ThisWorkbook.Save
     targetWorkbook.Close savechanges:=True
 End Sub
-
 
 
 Sub InputOtrs()
